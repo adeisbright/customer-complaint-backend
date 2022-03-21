@@ -1,8 +1,7 @@
-import {connect , connection , Schema , model} from "mongoose" ; 
-import * as bcrypt from "bcryptjs"
+import {connect , connection } from "mongoose" ; 
 import Config from "./src/config";
 import mongooseOptions from "./src/loaders/mongoose-options"
-
+import adminServices from "./src/features/administrator/admin.services";
 
 
 (async () => {
@@ -10,26 +9,15 @@ import mongooseOptions from "./src/loaders/mongoose-options"
     let db = await connect(Config.mongoUrl, mongooseOptions)
     try {
         if (db){
-            interface IAdmin {
-                email : string ,
-                password : string
-            }
             
-            const adminSchema = new Schema<IAdmin>({
-                email : String , 
-                password : String
-            })
-
-            const Admin = model<IAdmin>("admin" , adminSchema)
-            
-            const isAdmin = await Admin.findOne({email : Config.adminEmail})
+            const isAdmin = await adminServices.getOne(Config.adminEmail)
             if (isAdmin){
                 console.log(`An admin already exist with this email ${Config.adminEmail}`)
                 return 
             }else {
-                await Admin.create({
+                await adminServices.add({
                     email : Config.adminEmail, 
-                    password : await bcrypt.hash(Config.adminPassword , 10)
+                    password : Config.adminPassword 
                 })
                 console.log(`Admin creation was successful`)
             }

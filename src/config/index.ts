@@ -8,7 +8,8 @@ interface IConfig {
     serverPort: string 
     mongoUrl : string
     adminEmail : string 
-    adminPassword  :string
+    adminPassword  :string,
+    saltFactor : number
 }
 
 const Config: IConfig = {
@@ -17,7 +18,8 @@ const Config: IConfig = {
         process.env.LOCAL_MONGO_URL as string : 
         process.env.LOCAL_REMOTE_URL as string , 
     adminEmail : process.env.ADMIN_EMAIL as string ,
-    adminPassword : process.env.ADMIN_PASSWORD as string 
+    adminPassword : process.env.ADMIN_PASSWORD as string,
+    saltFactor : Number(process.env.SALT_FACTOR)
 }
 
 export default Config
