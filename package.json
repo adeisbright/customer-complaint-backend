@@ -7,6 +7,7 @@
     "devstart" : "ts-node-dev --respawn --pretty --transpile-only src/index.ts" , 
     "start" : "tsc && node --unhandled-rejections=strict ./dist/index.js" , 
     "test": "" , 
+    "seed" : "tsc seed.ts --outdir ./seed && node --unhandled-rejections=strict ./seed/seed.js",
     "debug":"export DEBUG=* && npm run start"
   },
   "keywords": [
