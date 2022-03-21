@@ -5,8 +5,8 @@ let environment : string = process.env.NODE_ENV === "production" ?
     "production" : "dev"
 
 interface IConfig {
-    serverPort: String 
-    mongoUrl : String
+    serverPort: string 
+    mongoUrl : string
 }
 
 const Config: IConfig = {

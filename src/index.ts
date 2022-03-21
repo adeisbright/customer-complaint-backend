@@ -3,6 +3,8 @@ import helmet from "helmet"
 import cors from "cors"
 import compression from "compression" 
 import Config from "./config"
+import startMongoDB from "./loaders/mongoose-loader" 
+
 
 const app:express.Application = express() 
 
@@ -19,6 +21,8 @@ app.get("/" , (req : Request , res : Response) => {
         }
     })
 })
+
+startMongoDB() 
 
 app.listen(Config.serverPort , () => 
     console.log(`Started at localhost:${Config.serverPort}`)
