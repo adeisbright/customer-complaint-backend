@@ -2,7 +2,7 @@ import express , {Request , Response} from "express"
 import helmet from "helmet"
 import cors from "cors"
 import compression from "compression" 
-
+import Config from "./config"
 
 const app:express.Application = express() 
 
@@ -20,5 +20,7 @@ app.get("/" , (req : Request , res : Response) => {
     })
 })
 
-app.listen(4800 , () => console.log("Started at localhost:4800"))
+app.listen(Config.serverPort , () => 
+    console.log(`Started at localhost:${Config.serverPort}`)
+)
 
