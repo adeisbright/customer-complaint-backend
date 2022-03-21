@@ -1,0 +1,20 @@
+{
+  "name": "malon-backend",
+  "version": "1.0.0",
+  "description": "Backend API for Complaint Management System",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Customer",
+    "Relationship",
+    "Management",
+    "Business",
+    "Automation",
+    "Backoffice",
+    "Operation"
+  ],
+  "author": "Adeleke Bright",
+  "license": "ISC"
+}
