@@ -4,7 +4,10 @@
   "description": "Backend API for Complaint Management System",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "devstart" : "ts-node-dev --respawn --pretty --transpile-only src/index.ts" , 
+    "start" : "tsc && node --unhandled-rejections=strict ./dist/index.js" , 
+    "test": "" , 
+    "debug":"export DEBUG=* && npm run start"
   },
   "keywords": [
     "Customer",
