@@ -10,6 +10,10 @@ class AdminDAO {
     async getAdminByEmail(email : string) : Promise<any>{
         return await AdminModel.findOne({email : email})
     }
+
+    async getOne(id:string) : Promise<any>{
+        return await AdminModel.findById(id)
+    }
 }
 
 export default new AdminDAO()

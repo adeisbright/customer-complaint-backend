@@ -5,6 +5,7 @@ import compression from "compression"
 import Config from "./config"
 import startMongoDB from "./loaders/mongoose-loader" 
 import adminRouter from "./features/administrator/admin.routes"
+import branchRouter from "./features/branch/branch.routes"
 
 
 const app:express.Application = express() 
@@ -26,6 +27,7 @@ app.get("/" , (req : Request , res : Response) => {
 startMongoDB() 
 
 app.use(adminRouter)
+app.use(branchRouter)
 
 app.listen(Config.serverPort , () => 
     console.log(`Started at localhost:${Config.serverPort}`)

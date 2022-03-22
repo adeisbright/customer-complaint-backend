@@ -1,15 +1,14 @@
 import {Request , Response , NextFunction} from "express"
 import * as jwt from "jsonwebtoken"
 import Config from "../config"
+import IObjectProps from "./props.interface"
 
 const {JWT :  {secret , subject , issuer , expires}} = Config 
 
-interface IObjectProps {
-    [key : string] : any
-}
+
 
 interface LoginService {
-    getOne : (id : string) => Promise<IObjectProps> 
+    getByEmail: (email : string) => Promise<IObjectProps> 
 }
 
 
@@ -29,7 +28,7 @@ class Login {
             try{
         
                 let {email , password} = req.body 
-                let user = await this.service.getOne(email) 
+                let user = await this.service.getByEmail(email) 
                 if (!user){
                     return res.status(404).json({
                         message : "Not admin"

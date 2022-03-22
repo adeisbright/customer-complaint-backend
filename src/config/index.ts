@@ -17,7 +17,8 @@ interface IConfig {
     adminEmail : string 
     adminPassword  :string,
     saltFactor : number,
-    JWT : IJWT
+    JWT : IJWT , 
+    maxBranches : number 
 }
 
 const Config: IConfig = {
@@ -34,7 +35,8 @@ const Config: IConfig = {
         subject : process.env.JWT_SUBJECT as string , 
         algorithm : process.env.JWT_ALGORITHM as string,
         expires : Number(process.env.JWT_EXPIRES)
-    }
+    } , 
+    maxBranches : Number(process.env.MAX_BRANCHES)
 }
 
 export default Config

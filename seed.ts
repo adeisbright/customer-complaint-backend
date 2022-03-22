@@ -10,7 +10,7 @@ import adminServices from "./src/features/administrator/admin.services";
     try {
         if (db){
             
-            const isAdmin = await adminServices.getOne(Config.adminEmail)
+            const isAdmin = await adminServices.getByEmail(Config.adminEmail)
             if (isAdmin){
                 console.log(`An admin already exist with this email ${Config.adminEmail}`)
                 return 

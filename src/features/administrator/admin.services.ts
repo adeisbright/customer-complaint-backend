@@ -7,8 +7,11 @@ class AdminService implements IMandatoryCrud<IAdmin,string> {
         return await adminDao.addAdmin(resource)
     }
 
-    async getOne(value : string){
-        return await adminDao.getAdminByEmail(value)
+    async getByEmail(email : string){
+        return await adminDao.getAdminByEmail(email)
+    }
+    async getOne(id : string){
+        return await adminDao.getOne(id)
     }
 }
 
