@@ -25,6 +25,9 @@ adminSchema.pre("save" , async function(next){
     }
 }) 
 
+adminSchema.methods.isCorrectPassword = async function(text : string) : Promise<boolean>{
+    return await bcrypt.compare(text , this.password)
+}
 
 const AdminModel = model<IAdmin>("administrators" , adminSchema)
 

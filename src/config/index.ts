@@ -4,22 +4,37 @@ dotenv.config()
 let environment : string = process.env.NODE_ENV === "production" ? 
     "production" : "dev"
 
+interface IJWT {
+    secret : string 
+    issuer  :string 
+    expires : number 
+    subject : string 
+    algorithm : string 
+}
 interface IConfig {
     serverPort: string 
     mongoUrl : string
     adminEmail : string 
     adminPassword  :string,
-    saltFactor : number
+    saltFactor : number,
+    JWT : IJWT
 }
 
 const Config: IConfig = {
-    serverPort : process.env.SERVER_PORT as string , 
+    serverPort : process.env.SERVER_PORT as string ,
     mongoUrl : environment === "dev" ? 
         process.env.LOCAL_MONGO_URL as string : 
         process.env.LOCAL_REMOTE_URL as string , 
     adminEmail : process.env.ADMIN_EMAIL as string ,
     adminPassword : process.env.ADMIN_PASSWORD as string,
-    saltFactor : Number(process.env.SALT_FACTOR)
+    saltFactor : Number(process.env.SALT_FACTOR) ,
+    JWT : {
+        secret : process.env.JWT_SECRET as string , 
+        issuer : process.env.JWT_ISSUER as string , 
+        subject : process.env.JWT_SUBJECT as string , 
+        algorithm : process.env.JWT_ALGORITHM as string,
+        expires : Number(process.env.JWT_EXPIRES)
+    }
 }
 
 export default Config
