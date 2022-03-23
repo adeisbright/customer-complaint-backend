@@ -8,6 +8,7 @@ import adminRouter from "./features/administrator/admin.routes"
 import branchRouter from "./features/branch/branch.routes"
 import managerRouter from "./features/manager/manager.routes"
 import customerRouter from "./features/customer/customer.routes"
+import complaintRouter from "./features/complaint/complaint.routes"
 
 const app:express.Application = express() 
 
@@ -31,6 +32,7 @@ app.use(adminRouter)
 app.use(branchRouter)
 app.use(managerRouter)
 app.use(customerRouter)
+app.use(complaintRouter)
 
 app.listen(Config.serverPort , () => 
     console.log(`Started at localhost:${Config.serverPort}`)
