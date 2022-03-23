@@ -29,9 +29,21 @@ managerSchema.pre("save" , async function(next){
     }
 }) 
 
+managerSchema.post("save" , async function(next){
+    delete this.password 
+    return 
+}) 
+
 managerSchema.methods.isCorrectPassword = async function(text : string) : Promise<boolean>{
     return await bcrypt.compare(text , this.password)
 }
+
+managerSchema.pre("find" , {query : true} , 
+async function(next){
+    this.select({password : 0})
+    return next()
+})
+
 
 const ManagerModel = model<IManager>("managers" , managerSchema) 
 export default ManagerModel

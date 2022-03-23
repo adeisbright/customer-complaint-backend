@@ -7,7 +7,7 @@ import startMongoDB from "./loaders/mongoose-loader"
 import adminRouter from "./features/administrator/admin.routes"
 import branchRouter from "./features/branch/branch.routes"
 import managerRouter from "./features/manager/manager.routes"
-
+import customerRouter from "./features/customer/customer.routes"
 
 const app:express.Application = express() 
 
@@ -30,6 +30,7 @@ startMongoDB()
 app.use(adminRouter)
 app.use(branchRouter)
 app.use(managerRouter)
+app.use(customerRouter)
 
 app.listen(Config.serverPort , () => 
     console.log(`Started at localhost:${Config.serverPort}`)
