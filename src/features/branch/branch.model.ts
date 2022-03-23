@@ -1,5 +1,6 @@
 import {Schema , model} from "mongoose" 
 import IBranch from "./branch.interface"
+import ManagerModel from "../manager/manager.model"
 
 const branchSchema = new Schema<IBranch>({
     name : String , 
@@ -22,5 +23,12 @@ const branchSchema = new Schema<IBranch>({
     timestamps : true
 })
 
-const BranchModel = model<IBranch>("branches" , branchSchema) 
+
+branchSchema.pre("deleteOne" ,{ document: true}, 
+    async function(next){
+        await ManagerModel.deleteMany({ branch: this._id });
+        next()
+})
+
+const BranchModel = model<IBranch>("branches" , branchSchema)                  
 export default BranchModel

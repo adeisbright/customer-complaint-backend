@@ -1,47 +1,55 @@
 
 import {Request , Response , NextFunction} from "express" 
-import Config from "../../config"; 
-import branchServices from "./branch.services";
+import managerServices from "./manager.services";
 import getQueryParser from "../../lib/get-query-parser"
+import branchServices from "../branch/branch.services";
+import IObjectProps from "../../common/props.interface";
 
 
-class BranchController {
-    async addBranch(
+class ManagerController {
+    async addManager(
         req : Request , 
         res : Response , 
         next : NextFunction
     ){
         try{
-            const MAX_BRANCH_COUNT = Number(Config.maxBranches)
-            const branches = await branchServices.getAll(5,1) 
-            if (!(branches.length < (MAX_BRANCH_COUNT - 1))){
-                return res.status(400).json({
-                    message : "BadRequest  :Maximum Number of Branches Created"
-                })
-            }
             const {
-                name , 
+                firstName , 
+                lastName , 
                 email , 
-                address , 
-                state , 
-                city , 
+                branch , 
                 phoneNumber
             } = req.body 
 
-            let data = await branchServices.add({
-                name , 
+            const isValidBranch = await branchServices.getOne(branch)
+            if(!isValidBranch){
+                return res.status(404).json({
+                    message : "A non-existent branch as provided"
+                })
+            }
+            let data : IObjectProps = await managerServices.add({
+                firstName , 
+                lastName , 
                 email , 
                 phoneNumber , 
-                address : {
-                    city , 
-                    state , 
-                    address
-                }
+                branch  , 
+                password : phoneNumber
             })
+
+            let clone = Object.create({}) 
+            
+
+            if (data !== null){
+                Object.assign(clone , data._doc) 
+                delete clone.password
+                delete clone.__v
+            
+            }
+           
             res.status(201).json({
-                message : "Branch Added Successfully" , 
+                message : "Manager Added Successfully" , 
                 body : {
-                    data : data
+                    data : clone
                 }
             })
         }catch(error : any){
@@ -52,14 +60,14 @@ class BranchController {
         }
     }
 
-    async getBranch(
+    async getManager(
         req : Request , 
         res : Response , 
         next : NextFunction
     ){
         try{
             const {id} = req.params 
-            const data = await branchServices.getOne(id)
+            const data = await managerServices.getOne(id)
             if (!data){
                 return res.status(404).json({
                     message : "Resource not found" ,
@@ -67,7 +75,7 @@ class BranchController {
                 })
             }
             res.status(200).json({
-                message : "Branch Retrieval" , 
+                message : "Manager Retrieval" , 
                 body : {
                     data 
                 }
@@ -80,18 +88,18 @@ class BranchController {
         }
     }
 
-    async getBranches(
+    async getManagers(
         req : Request , 
         res : Response , 
         next : NextFunction
     ){
         try{
             const {size , skip , filters } = getQueryParser(req.query)
-            const data = await branchServices.getAll(
+            const data = await managerServices.getAll(
                 Number(size) ,Number(skip) , filters
             )
             res.status(200).json({
-                message : "Branches Retrieval" , 
+                message : "Managers Retrieval" , 
                 body : {
                     data 
                 }
@@ -104,23 +112,23 @@ class BranchController {
         }
     }
 
-    async removeBranch(
+    async removeManager(
         req : Request , 
         res : Response , 
         next : NextFunction
     ){
         try{
             const {id} = req.params 
-            const isExist = await branchServices.getOne(id)
+            const isExist = await managerServices.getOne(id)
             if (!isExist){
                 return res.status(404).json({
                     message : "Resource not found" ,
                     body : {}
                 })
             }
-            await branchServices.delete(id)
+            await managerServices.delete(id)
             res.status(200).json({
-                message : "Branches Removed Successfully" , 
+                message : "Manager Removed Successfully" , 
                 body : {}
             })
         }catch(error : any){
@@ -131,23 +139,24 @@ class BranchController {
         }
     }
 
-    async updateBranch(
+    async updateManager(
         req : Request , 
         res : Response , 
         next : NextFunction
     ){
         try{
             const {id} = req.params 
-            const isExist = await branchServices.getOne(id)
+            const isExist = await managerServices.getOne(id)
             if (!isExist){
                 return res.status(404).json({
                     message : "Resource not found" ,
                     body : {}
                 })
             }
-            let data = await branchServices.update(id , req.body) 
+            let data = await managerServices.update(id , req.body) 
+            
             res.status(200).json({
-                message : "Branches Updated Successfully" , 
+                message : "Manager Updated Successfully" , 
                 body : {
                     data
                 }
@@ -162,4 +171,4 @@ class BranchController {
 
 }
 
-export default new BranchController()
+export default new ManagerController()

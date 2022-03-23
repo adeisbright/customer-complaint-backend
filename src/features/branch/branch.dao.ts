@@ -8,6 +8,7 @@ class BranchDAO {
     }
 
     async getOne(id : string){
+        
         return await BranchModel.findById(id)
     }
 
@@ -17,7 +18,11 @@ class BranchDAO {
     }
 
     async remove(id : string){
-        return await BranchModel.deleteOne({_id : id})
+        const doc  = await BranchModel.findById(id)
+        if (doc !== null){
+            return doc.deleteOne()
+        }
+        return 
     } 
 
     async update(id : string , data : IBranchUpdate){

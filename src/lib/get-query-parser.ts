@@ -6,9 +6,9 @@ import IObjectProps from "../common/props.interface"
  */
 
 const getQueryParser = function(obj : IObjectProps ) {
-    const {page, limit, filter} = obj;
+    const {page, filter} = obj;
     const pageNumber = Math.abs(parseInt(page)) || 1;
-    const docLimit = parseInt(limit) || 10;
+    const docLimit = 10;
     const skip = docLimit * (pageNumber - 1);
     let options : IObjectProps = {};
 
