@@ -4,6 +4,9 @@ import customerServices from "./customer.services";
 import getQueryParser from "../../lib/get-query-parser"
 import branchServices from "../branch/branch.services";
 import IObjectProps from "../../common/props.interface";
+import ApplicationError from "../../common/error-handler/ApplicationError"; 
+import NotFoundError from "../../common/error-handler/NotFoundError";
+import BadRequestError from "../../common/error-handler/BadRequestError";
 
 
 class CustomerController {
@@ -24,9 +27,8 @@ class CustomerController {
 
             const isValidBranch = await branchServices.getOne(branch)
             if(!isValidBranch){
-                return res.status(404).json({
-                    message : "A non-existent branch as provided"
-                })
+                
+                return next(new BadRequestError("A non-existent branch as provided"))
             }
             let data : IObjectProps = await customerServices.add({
                 firstName , 
@@ -55,10 +57,7 @@ class CustomerController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -71,10 +70,7 @@ class CustomerController {
             const {id} = req.params 
             const data = await customerServices.getOne(id)
             if (!data){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                return next(new NotFoundError( "Resource not found"))
             }
             res.status(200).json({
                 message : "Customer Retrieval" , 
@@ -83,10 +79,7 @@ class CustomerController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -107,10 +100,7 @@ class CustomerController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -123,10 +113,7 @@ class CustomerController {
             const {id} = req.params 
             const isExist = await customerServices.getOne(id)
             if (!isExist){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                return next(new NotFoundError( "Resource not found"))
             }
             await customerServices.delete(id)
             res.status(200).json({
@@ -134,10 +121,7 @@ class CustomerController {
                 body : {}
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -150,10 +134,7 @@ class CustomerController {
             const {id} = req.params 
             const isExist = await customerServices.getOne(id)
             if (!isExist){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                return next(new NotFoundError( "Resource not found"))
             }
             let data = await customerServices.update(id , req.body) 
             
@@ -164,10 +145,7 @@ class CustomerController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 

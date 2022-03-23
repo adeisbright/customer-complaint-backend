@@ -5,6 +5,9 @@ import getQueryParser from "../../lib/get-query-parser"
 import branchServices from "../branch/branch.services";
 import IObjectProps from "../../common/props.interface";
 import customerServices from "../customer/customer.services";
+import BadRequestError from "../../common/error-handler/BadRequestError"; 
+import ApplicationError from "../../common/error-handler/ApplicationError"; 
+import NotFoundError from "../../common/error-handler/NotFoundError";
 
 
 class ComplaintController {
@@ -26,9 +29,7 @@ class ComplaintController {
             ])
 
             if(!isBranch || !isCustomer){
-                return res.status(404).json({
-                    message : "A non-existent branch/customer was provided"
-                })
+                return next(new BadRequestError("Resource not found"));
             }
             let data : IObjectProps = await complaintServices.add({
                 title , 
@@ -45,10 +46,7 @@ class ComplaintController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -97,10 +95,7 @@ class ComplaintController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -113,10 +108,7 @@ class ComplaintController {
             const {id} = req.params 
             const isExist = await complaintServices.getOne(id)
             if (!isExist){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                return next(new NotFoundError("Resource not found"));
             }
             await complaintServices.delete(id)
             res.status(200).json({
@@ -124,10 +116,7 @@ class ComplaintController {
                 body : {}
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -140,10 +129,7 @@ class ComplaintController {
             const {id} = req.params 
             const isExist = await complaintServices.getOne(id)
             if (!isExist){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                return next(new NotFoundError("Resource not found"));
             }
             let data = await complaintServices.update(id , req.body) 
             
@@ -154,10 +140,7 @@ class ComplaintController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 

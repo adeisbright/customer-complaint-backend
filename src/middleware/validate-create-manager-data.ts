@@ -1,6 +1,7 @@
 import {Request , Response , NextFunction} from "express" 
 import Joi from "joi"
 import isValidId from "../lib/is-valid-id" 
+import BadRequestError from "../common/error-handler/BadRequestError"
 
 const validateManagerData = async (
     req : Request , 
@@ -43,10 +44,7 @@ const validateManagerData = async (
         })
         next()
     }catch(error  :any){
-        console.log(error)
-        res.status(500).json({
-            message : error.message
-        })
+        return next(new BadRequestError(error.message))
     }
 }
 

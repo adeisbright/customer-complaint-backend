@@ -4,6 +4,10 @@ import managerServices from "./manager.services";
 import getQueryParser from "../../lib/get-query-parser"
 import branchServices from "../branch/branch.services";
 import IObjectProps from "../../common/props.interface";
+import ApplicationError from "../../common/error-handler/ApplicationError"; 
+import ForbiddenError from "../../common/error-handler/ForbiddenError";
+import NotFoundError from "../../common/error-handler/NotFoundError";
+import BadRequestError from "../../common/error-handler/BadRequestError";
 
 
 class ManagerController {
@@ -23,9 +27,7 @@ class ManagerController {
 
             const isValidBranch = await branchServices.getOne(branch)
             if(!isValidBranch){
-                return res.status(404).json({
-                    message : "A non-existent branch as provided"
-                })
+                return next(new BadRequestError("A non-existent branch as provided"))
             }
             let data : IObjectProps = await managerServices.add({
                 firstName , 
@@ -53,10 +55,7 @@ class ManagerController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -69,10 +68,7 @@ class ManagerController {
             const {id} = req.params 
             const data = await managerServices.getOne(id)
             if (!data){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                return next(new NotFoundError("Resource not found"))
             }
             res.status(200).json({
                 message : "Manager Retrieval" , 
@@ -81,10 +77,7 @@ class ManagerController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -105,10 +98,7 @@ class ManagerController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -121,10 +111,7 @@ class ManagerController {
             const {id} = req.params 
             const isExist = await managerServices.getOne(id)
             if (!isExist){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                return next(new NotFoundError("Resource not found"))
             }
             await managerServices.delete(id)
             res.status(200).json({
@@ -132,10 +119,7 @@ class ManagerController {
                 body : {}
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -148,10 +132,7 @@ class ManagerController {
             const {id} = req.params 
             const isExist = await managerServices.getOne(id)
             if (!isExist){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                return next(new NotFoundError("Resource not found"))
             }
             let data = await managerServices.update(id , req.body) 
             
@@ -162,10 +143,7 @@ class ManagerController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message))
         }
     }
 

@@ -3,6 +3,11 @@ import {Request , Response , NextFunction} from "express"
 import Config from "../../config"; 
 import branchServices from "./branch.services";
 import getQueryParser from "../../lib/get-query-parser"
+import response from "../../lib/http-response";
+import constants from "../../constant";
+import ApplicationError from "../../common/error-handler/ApplicationError";
+import BadRequestError from "../../common/error-handler/BadRequestError";
+import NotFoundError from "../../common/error-handler/NotFoundError";
 
 
 class BranchController {
@@ -15,9 +20,7 @@ class BranchController {
             const MAX_BRANCH_COUNT = Number(Config.maxBranches)
             const branches = await branchServices.getAll(5,1) 
             if (!(branches.length < (MAX_BRANCH_COUNT - 1))){
-                return res.status(400).json({
-                    message : "BadRequest  :Maximum Number of Branches Created"
-                })
+                return next(new BadRequestError("Maximum Number of Branches Created"))
             }
             const {
                 name , 
@@ -45,10 +48,7 @@ class BranchController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new BadRequestError(error.message))
         }
     }
 
@@ -61,10 +61,7 @@ class BranchController {
             const {id} = req.params 
             const data = await branchServices.getOne(id)
             if (!data){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                return next(new NotFoundError("Resource not found"))
             }
             res.status(200).json({
                 message : "Branch Retrieval" , 
@@ -73,10 +70,7 @@ class BranchController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message));
         }
     }
 
@@ -97,10 +91,7 @@ class BranchController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message));
         }
     }
 
@@ -113,10 +104,8 @@ class BranchController {
             const {id} = req.params 
             const isExist = await branchServices.getOne(id)
             if (!isExist){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                
+                return next(new NotFoundError("Resource not found"));
             }
             await branchServices.delete(id)
             res.status(200).json({
@@ -124,10 +113,7 @@ class BranchController {
                 body : {}
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message));
         }
     }
 
@@ -140,10 +126,7 @@ class BranchController {
             const {id} = req.params 
             const isExist = await branchServices.getOne(id)
             if (!isExist){
-                return res.status(404).json({
-                    message : "Resource not found" ,
-                    body : {}
-                })
+                return next(new NotFoundError("Resource not found"))
             }
             let data = await branchServices.update(id , req.body) 
             res.status(200).json({
@@ -153,10 +136,7 @@ class BranchController {
                 }
             })
         }catch(error : any){
-            console.log(error)
-            res.status(500).json({
-                message  :error.message
-            })
+            return next(new ApplicationError(error.message));
         }
     }
 
