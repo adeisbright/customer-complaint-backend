@@ -1,6 +1,8 @@
 import { Request , Response , NextFunction } from "express";
 import * as jwt from "jsonwebtoken"
 import Config from "../config";
+import BadRequestError from "../common/error-handler/BadRequestError"; 
+import ApplicationError from "../common/error-handler/ApplicationError"; 
 
 const {JWT :  {secret , subject , issuer}} = Config
 
@@ -12,18 +14,16 @@ const authenticateRequst = async (
     try{
         const {authorization} = req.headers 
         if (authorization === undefined || authorization === ""){
-            return res.status(400).json({
-                message : "Bad Request  :Provide authorization header" , 
-                id:""
-            })
+            return next(new BadRequestError("Provide Authorizatin Header"))
         }
-        const [bearer , token] = authorization.split(" ") 
+        let bearer  ; 
+        let token  = ""
+        if (authorization !== undefined){
+            [bearer , token] = authorization.split(" ") 
+        }
         
         if (bearer !== "Bearer"){
-            return res.status(400).json({
-                message : "Bad Request  :Invalid Authorization",
-                id : ""
-            })
+            return next(new BadRequestError("Bad Request  :Invalid Authorization"))
         }
 
         let payload: jwt.JwtPayload  = jwt.verify(
@@ -37,11 +37,7 @@ const authenticateRequst = async (
         next()
 
     }catch(error : any){
-        console.log(error)
-        res.status(500).json({
-            message : "You dey feelam",
-            id : ""
-        })
+        return next(new ApplicationError(error.message))
     }
 }
 

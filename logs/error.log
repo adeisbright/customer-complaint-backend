@@ -1,0 +1,5 @@
+{
+  message: '::1 : POST /v1/managers 400 :BadRequestError Provide Authorizatin Header ',
+  level: 'error',
+  timestamp: '2022-03-23T17:48:25.248Z'
+}
