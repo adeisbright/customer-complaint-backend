@@ -29,7 +29,7 @@ class ComplaintController {
             ])
 
             if(!isBranch || !isCustomer){
-                return next(new BadRequestError("Resource not found"));
+                return next(new BadRequestError("Branch/customer not found"));
             }
             let data : IObjectProps = await complaintServices.add({
                 title , 
@@ -40,7 +40,7 @@ class ComplaintController {
 
            
             res.status(201).json({
-                message : "Customer Added Successfully" , 
+                message : "Complaint Added Successfully" , 
                 body : {
                     data : data
                 }
@@ -65,7 +65,7 @@ class ComplaintController {
                 })
             }
             res.status(200).json({
-                message : "Customer Retrieval" , 
+                message : "Complaint  Retrieval" , 
                 body : {
                     data 
                 }
@@ -89,7 +89,7 @@ class ComplaintController {
                 Number(size) ,Number(skip) , filters
             )
             res.status(200).json({
-                message : "Customer Retrieval" , 
+                message : "Complaint Retrieval" , 
                 body : {
                     data 
                 }
@@ -112,7 +112,7 @@ class ComplaintController {
             }
             await complaintServices.delete(id)
             res.status(200).json({
-                message : "Customer Removed Successfully" , 
+                message : "Complaint Removed Successfully" , 
                 body : {}
             })
         }catch(error : any){

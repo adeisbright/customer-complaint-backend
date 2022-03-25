@@ -2,6 +2,7 @@ import { Router } from "express" ;
 import complaintController from "./complaint.controller";
 import isAdminRequest from "../../middleware/is-request-from-admin";
 import authenticateRequst from "../../middleware/auth"; 
+import validateComplaint from "../../middleware/validate-complaint";
 
 const {
   addComplaint , 
@@ -16,7 +17,7 @@ const complaintRouter = Router()
 complaintRouter.route("/v1/complaints")
 
 .get(getComplaints)
-.post(authenticateRequst,isAdminRequest, addComplaint)
+.post(validateComplaint , authenticateRequst,isAdminRequest, addComplaint)
 
 
 complaintRouter.route("/v1/complaints/:id")

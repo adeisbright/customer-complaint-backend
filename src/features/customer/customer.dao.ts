@@ -26,6 +26,10 @@ class CustomerDAO {
             new : true
         })
     }
+
+    async findByManyFields(options : IObjectProps[]){
+        return await CustomerModel.find({$or : options})
+    }
 }
 
 export default new CustomerDAO()

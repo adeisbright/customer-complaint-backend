@@ -26,6 +26,10 @@ IOptionalCrud<string , IManagerPatch>{
     async update(id :  string, data: IManagerPatch){
         return await managerDao.update(id , data)
     }
+   
+    async findByManyFields(data :IObjectProps[]){
+        return await managerDao.findByManyFields(data)
+    }
 }
 
 export default new ManagerService()

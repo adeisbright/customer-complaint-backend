@@ -26,6 +26,10 @@ IOptionalCrud<string , IBranchUpdate>{
     async update(id :  string, data: IBranchUpdate){
         return await branchDao.update(id , data)
     }
+
+    async findByManyFields(data :IObjectProps[]){
+        return await branchDao.findByManyFields(data)
+    }
 }
 
 export default new BranchService()

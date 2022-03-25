@@ -8,6 +8,8 @@ import constants from "../../constant";
 import ApplicationError from "../../common/error-handler/ApplicationError";
 import BadRequestError from "../../common/error-handler/BadRequestError";
 import NotFoundError from "../../common/error-handler/NotFoundError";
+import checkIfDuplicate from "../../common/reject-duplicate";
+import IObjectProps from "../../common/props.interface";
 
 
 class BranchController {
@@ -30,7 +32,16 @@ class BranchController {
                 city , 
                 phoneNumber
             } = req.body 
+            //Check if duplicate 
+            let options = [
+                {email : email} , 
+                {phoneNumber : phoneNumber}
+            ]
+           
 
+            if (! await checkIfDuplicate(branchServices , {} , options)){
+                return next(new BadRequestError("A Branch with same details exist")) 
+            }
             let data = await branchServices.add({
                 name , 
                 email , 
@@ -48,7 +59,7 @@ class BranchController {
                 }
             })
         }catch(error : any){
-            return next(new BadRequestError(error.message))
+            return next(new ApplicationError(error.message))
         }
     }
 
@@ -128,9 +139,22 @@ class BranchController {
             if (!isExist){
                 return next(new NotFoundError("Resource not found"))
             }
+           
+            let options = [] 
+            for (let [key,value] of Object.entries(req.body)){
+                let obj:IObjectProps = {} 
+                obj[key] = value
+                options.push(obj)
+            }
+     
+           
+
+            if (! await checkIfDuplicate(branchServices , isExist , options)){
+                return next(new BadRequestError("A Branch with same details exist")) 
+            }
             let data = await branchServices.update(id , req.body) 
             res.status(200).json({
-                message : "Branches Updated Successfully" , 
+                message : "Branch Updated Successfully" , 
                 body : {
                     data
                 }

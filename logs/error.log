@@ -3,3 +3,363 @@
   level: 'error',
   timestamp: '2022-03-23T17:48:25.248Z'
 }
+{
+  message: '::1 : POST /auth/admin 404 :NotFoundError Incorrect Credentials Provided ',
+  level: 'error',
+  timestamp: '2022-03-24T14:14:53.259Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError "name" is required ',
+  level: 'error',
+  timestamp: '2022-03-24T14:16:39.546Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError Provide a valid email/mobile ',
+  level: 'error',
+  timestamp: '2022-03-24T14:17:33.762Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:48:31.765Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:48:52.650Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:49:44.235Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:50:19.122Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:52:12.483Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:52:53.941Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:54:08.712Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:54:24.994Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:56:16.970Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:56:39.369Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:58:03.816Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:58:28.604Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T16:59:02.153Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:00:28.903Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:01:17.093Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:02:59.462Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:04:25.028Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:05:00.768Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:05:56.291Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:06:45.335Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:07:50.816Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:08:09.206Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:13:10.425Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:15:03.438Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-24T17:15:18.475Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError Maximum Number of Branches Created ',
+  level: 'error',
+  timestamp: '2022-03-24T17:15:26.292Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:44:21.687Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:45:46.960Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:46:51.855Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:47:20.449Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:47:59.376Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:48:26.798Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:48:57.435Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:49:56.872Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:50:28.602Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:50:47.915Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:51:24.476Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623ca6a12b0f68cbd273e7c8 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:56:53.854Z'
+}
+{
+  message: '::1 : POST /v1/branches/ 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T02:57:34.835Z'
+}
+{
+  message: '::1 : POST /v1/branches/ 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T03:00:09.520Z'
+}
+{
+  message: '::1 : POST /v1/branches/ 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T03:00:52.328Z'
+}
+{
+  message: '::1 : POST /v1/branches/ 400 :BadRequestError Maximum Number of Branches Created ',
+  level: 'error',
+  timestamp: '2022-03-25T03:02:51.151Z'
+}
+{
+  message: '::1 : POST /v1/branches 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T03:03:40.154Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623d318595e0ff1175c1f181 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T03:06:51.308Z'
+}
+{
+  message: '::1 : PATCH /v1/branches/623d318595e0ff1175c1f181 400 :BadRequestError A Branch with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T03:08:43.857Z'
+}
+{
+  message: '::1 : POST /v1/managers 400 :BadRequestError A non-existent branch as provided ',
+  level: 'error',
+  timestamp: '2022-03-25T03:20:37.613Z'
+}
+{
+  message: '::1 : POST /v1/managers 400 :BadRequestError A manager  with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T03:28:04.628Z'
+}
+{
+  message: '::1 : POST /v1/managers 400 :BadRequestError A manager  with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T04:00:08.925Z'
+}
+{
+  message: '::1 : POST /v1/managers 400 :BadRequestError Provide a valid email/mobile ',
+  level: 'error',
+  timestamp: '2022-03-25T04:00:50.700Z'
+}
+{
+  message: '::1 : POST /v1/managers 400 :BadRequestError Provide a valid email/mobile ',
+  level: 'error',
+  timestamp: '2022-03-25T04:01:13.533Z'
+}
+{
+  message: '::1 : POST /v1/managers 400 :BadRequestError A manager  with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T04:01:28.162Z'
+}
+{
+  message: '::1 : POST /v1/managers 400 :BadRequestError A manager  with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T04:01:53.478Z'
+}
+{
+  message: '::1 : PATCH /v1/managers/623d3513522042c0d1657936 400 :BadRequestError A Manager with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T04:04:09.028Z'
+}
+{
+  message: '::1 : PATCH /v1/managers/623d3513522042c0d1657936 400 :BadRequestError A Manager with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T04:05:45.141Z'
+}
+{
+  message: '::1 : PATCH /v1/managers/623d3513522042c0d1657936 400 :BadRequestError A Manager with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T04:06:27.305Z'
+}
+{
+  message: '::1 : POST /v1/customers 400 :BadRequestError A non-existent branch as provided ',
+  level: 'error',
+  timestamp: '2022-03-25T04:25:12.782Z'
+}
+{
+  message: '::1 : POST /v1/customers 400 :BadRequestError "address" is required ',
+  level: 'error',
+  timestamp: '2022-03-25T04:37:48.922Z'
+}
+{
+  message: '::1 : POST /v1/customers 400 :BadRequestError "city" is required ',
+  level: 'error',
+  timestamp: '2022-03-25T04:41:31.718Z'
+}
+{
+  message: '::1 : POST /v1/customers 400 :BadRequestError "state" is required ',
+  level: 'error',
+  timestamp: '2022-03-25T04:41:51.006Z'
+}
+{
+  message: '::1 : POST /v1/customers 500 :ApplicationError next is not a function ',
+  level: 'error',
+  timestamp: '2022-03-25T04:43:49.806Z'
+}
+{
+  message: '::1 : POST /v1/customers 400 :BadRequestError A Customer with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T04:56:35.139Z'
+}
+{
+  message: '::1 : POST /v1/customers 400 :BadRequestError A Customer with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T05:11:55.728Z'
+}
+{
+  message: '::1 : POST /v1/customers 400 :BadRequestError A Customer with same details exist ',
+  level: 'error',
+  timestamp: '2022-03-25T05:12:44.376Z'
+}
+{
+  message: '::1 : POST /v1/complaints 400 :BadRequestError Resource not found ',
+  level: 'error',
+  timestamp: '2022-03-25T06:07:26.255Z'
+}
+{
+  message: '::1 : POST /v1/complaints 400 :BadRequestError Resource not found ',
+  level: 'error',
+  timestamp: '2022-03-25T06:12:41.401Z'
+}
+{
+  message: '::1 : POST /v1/complaints 400 :BadRequestError "branch" is required ',
+  level: 'error',
+  timestamp: '2022-03-25T06:13:02.400Z'
+}
+{
+  message: '::1 : POST /v1/complaints 400 :BadRequestError Resource not found ',
+  level: 'error',
+  timestamp: '2022-03-25T06:13:09.576Z'
+}
+{
+  message: '::1 : DELETE /v1/complaints/623d5e1eaf89934ea1e87bb7 404 :NotFoundError Resource not found ',
+  level: 'error',
+  timestamp: '2022-03-25T06:17:13.989Z'
+}
+{
+  message: '::1 : PATCH /v1/complaints/623d318595e0ff1175c1f181 404 :NotFoundError Resource not found ',
+  level: 'error',
+  timestamp: '2022-03-25T06:19:42.604Z'
+}

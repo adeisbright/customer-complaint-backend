@@ -7,7 +7,8 @@ import IObjectProps from "../../common/props.interface";
 import ApplicationError from "../../common/error-handler/ApplicationError"; 
 import NotFoundError from "../../common/error-handler/NotFoundError";
 import BadRequestError from "../../common/error-handler/BadRequestError";
-
+import checkIfDuplicate from "../../common/reject-duplicate";
+import fieldRemoval from "../../lib/remove-field"; 
 
 class CustomerController {
     async addCustomer(
@@ -30,6 +31,16 @@ class CustomerController {
                 
                 return next(new BadRequestError("A non-existent branch as provided"))
             }
+
+            let options = [
+                {email : email} , 
+                {phoneNumber : phoneNumber}
+            ]
+           
+            if (! await checkIfDuplicate(customerServices, {} , options)){
+                return next(new BadRequestError("A Customer with same details exist")) 
+            }
+
             let data : IObjectProps = await customerServices.add({
                 firstName , 
                 lastName , 
@@ -39,21 +50,11 @@ class CustomerController {
                 address , 
                 password : phoneNumber
             })
-
-            let clone = Object.create({}) 
-            
-
-            if (data !== null){
-                Object.assign(clone , data._doc) 
-                delete clone.password
-                delete clone.__v
-            
-            }
-           
+            let clone  = fieldRemoval(data._doc , ["password","__v"]).clone
             res.status(201).json({
                 message : "Customer Added Successfully" , 
                 body : {
-                    data : clone
+                    clone
                 }
             })
         }catch(error : any){

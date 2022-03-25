@@ -26,6 +26,10 @@ class ManagerDAO {
             new : true
         })
     }
+
+    async findByManyFields(options : IObjectProps[]){
+        return await ManagerModel.find({$or : options})
+    }
 }
 
 export default new ManagerDAO()

@@ -4,7 +4,7 @@ import IObjectProps from "../../common/props.interface";
 
 class BranchDAO {
     async create(data : IBranch){
-        return await BranchModel.create(data)
+       return await BranchModel.create(data) 
     }
 
     async getOne(id : string){
@@ -30,6 +30,10 @@ class BranchDAO {
             useFindAndModify : false , 
             new : true
         })
+    }
+
+    async findByManyFields(options : IObjectProps[]){
+        return await BranchModel.find({$or : options})
     }
 }
 

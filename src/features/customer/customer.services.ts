@@ -26,6 +26,10 @@ IOptionalCrud<string , ICustomerPatch>{
     async update(id :  string, data: ICustomerPatch){
         return await customerDao.update(id , data)
     }
+
+    async findByManyFields(data :IObjectProps[]){
+        return await customerDao.findByManyFields(data)
+    }
 }
 
 export default new CustomerService() 

@@ -35,8 +35,11 @@ customerSchema.pre("save" , async function(next){
 }) 
 
 customerSchema.post("save" , async function(next){
-    delete this.password 
-    return 
+    let clone = Object.create({}) 
+    Object.assign(clone , this._doc) 
+    delete clone.password
+    delete clone.__v
+    return {}
 }) 
 
 customerSchema.methods.isCorrectPassword = async function(text : string) : Promise<boolean>{

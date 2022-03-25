@@ -2,6 +2,9 @@ import {Request , Response , NextFunction} from "express"
 import Joi from "joi"
 import isValidId from "../lib/is-valid-id" 
 import BadRequestError from "../common/error-handler/BadRequestError"
+import DataValidator from "../lib/DataValidator"
+
+const {validateEmail , validateMobile} = DataValidator
 
 const validateManagerData = async (
     req : Request , 
@@ -15,6 +18,9 @@ const validateManagerData = async (
             email , 
             branch , 
             phoneNumber , 
+            address , 
+            state , 
+            city
         } = req.body  
 
         if (branch === undefined || !isValidId(branch)){
@@ -36,12 +42,29 @@ const validateManagerData = async (
             phoneNumber : Joi.string()
                 .required() 
         })
-        const {error , _} = await Schema.validateAsync({
-            firstName : firstName,
-            lastName : lastName,
-            email : email , 
-            phoneNumber : phoneNumber 
+        const CustomerSchema = Joi.object({
+            address : Joi.string().required() , 
+            city : Joi.string().required() , 
+            state : Joi.string().required() 
         })
+        if (!validateEmail(email) || !validateMobile(phoneNumber)){
+            return next(new BadRequestError("Provide a valid email/mobile"))
+        }
+        const {error , _} = await Schema.validateAsync({
+            firstName , 
+            lastName,
+            email , 
+            phoneNumber
+        })
+       
+        if (req.url.endsWith("customers")){ 
+            await CustomerSchema.validateAsync({
+                address,
+                city , 
+                state
+            })
+        }
+        
         next()
     }catch(error  :any){
         return next(new BadRequestError(error.message))

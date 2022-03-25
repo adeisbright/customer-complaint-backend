@@ -1,9 +1,12 @@
 import {Request , Response , NextFunction} from "express"
 import * as jwt from "jsonwebtoken"
 import Config from "../config"
-import IObjectProps from "./props.interface"
+import IObjectProps from "./props.interface" 
+import BadRequestError from "./error-handler/BadRequestError" 
+import ApplicationError from "./error-handler/ApplicationError"
+import NotFoundError from "./error-handler/NotFoundError"
 
-const {JWT :  {secret , subject , issuer , expires}} = Config 
+const {JWT :  {secret , subject , issuer , expires}} = Config  
 
 
 
@@ -30,18 +33,13 @@ class Login {
                 let {email , password} = req.body 
                 let user = await this.service.getByEmail(email) 
                 if (!user){
-                    return res.status(404).json({
-                        message : "Not admin"
-                    })
+                    return next(new NotFoundError("ERROR 404 : Not Found"))
                 }
-                let hasCorrectPassword = user.isCorrectPassword(
+                let hasCorrectPassword = await user.isCorrectPassword(
                     password
                 )
-                
                 if(!hasCorrectPassword){
-                    return res.status(400).json({
-                        message : "Incorrect password"
-                    })
+                    return next(new BadRequestError("Incorrect Credentials Provided"))
                 }
                
                 let token = jwt.sign({id : user._id}, secret, {
@@ -58,10 +56,7 @@ class Login {
                     }
                 })
             }catch(error : any){
-                console.log(error)
-                res.status(500).json({
-                    message : error.message
-                })
+                return next(new ApplicationError(error.message))
             }
     }
 }

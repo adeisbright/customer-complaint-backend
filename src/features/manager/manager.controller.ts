@@ -5,9 +5,9 @@ import getQueryParser from "../../lib/get-query-parser"
 import branchServices from "../branch/branch.services";
 import IObjectProps from "../../common/props.interface";
 import ApplicationError from "../../common/error-handler/ApplicationError"; 
-import ForbiddenError from "../../common/error-handler/ForbiddenError";
 import NotFoundError from "../../common/error-handler/NotFoundError";
 import BadRequestError from "../../common/error-handler/BadRequestError";
+import checkIfDuplicate from "../../common/reject-duplicate";
 
 
 class ManagerController {
@@ -28,7 +28,17 @@ class ManagerController {
             const isValidBranch = await branchServices.getOne(branch)
             if(!isValidBranch){
                 return next(new BadRequestError("A non-existent branch as provided"))
+            } 
+           
+            let options = [
+                {email : email} , 
+                {phoneNumber : phoneNumber}
+            ]
+           
+            if (! await checkIfDuplicate(managerServices, {} , options)){
+                return next(new BadRequestError("A manager  with same details exist")) 
             }
+
             let data : IObjectProps = await managerServices.add({
                 firstName , 
                 lastName , 
@@ -37,21 +47,11 @@ class ManagerController {
                 branch  , 
                 password : phoneNumber
             })
-
-            let clone = Object.create({}) 
-            
-
-            if (data !== null){
-                Object.assign(clone , data._doc) 
-                delete clone.password
-                delete clone.__v
-            
-            }
            
             res.status(201).json({
                 message : "Manager Added Successfully" , 
                 body : {
-                    data : clone
+                    data 
                 }
             })
         }catch(error : any){
@@ -133,6 +133,18 @@ class ManagerController {
             const isExist = await managerServices.getOne(id)
             if (!isExist){
                 return next(new NotFoundError("Resource not found"))
+            }
+            let options = [] 
+            for (let [key,value] of Object.entries(req.body)){
+                let obj:IObjectProps = {} 
+                obj[key] = value
+                options.push(obj)
+            }
+     
+           
+
+            if (! await checkIfDuplicate(managerServices , isExist , options)){
+                return next(new BadRequestError("A Manager with same details exist")) 
             }
             let data = await managerServices.update(id , req.body) 
             
