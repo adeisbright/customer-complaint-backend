@@ -11,6 +11,10 @@ class CustomerDAO {
         return await CustomerModel.findById(id)
     }
 
+    async getAdminByEmail(email : string) : Promise<any>{
+        return await CustomerModel.findOne({email : email})
+    }
+
     async getAll(limit : number , page : number , filter ?: IObjectProps){
         return await CustomerModel.find({})
         .skip(page).limit(limit).select(filter)

@@ -33,7 +33,7 @@ class Login {
                 let {email , password} = req.body 
                 let user = await this.service.getByEmail(email) 
                 if (!user){
-                    return next(new NotFoundError("ERROR 404 : Not Found"))
+                    return next(new NotFoundError("Invalid User Credentials"))
                 }
                 let hasCorrectPassword = await user.isCorrectPassword(
                     password
@@ -50,6 +50,7 @@ class Login {
                 })
                 
                 res.status(200).json({
+                    statusCode : 200,
                     message : "Login was successful" , 
                     body : {
                         data : token

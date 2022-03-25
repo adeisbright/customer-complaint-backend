@@ -9,6 +9,8 @@ import NotFoundError from "../../common/error-handler/NotFoundError";
 import BadRequestError from "../../common/error-handler/BadRequestError";
 import checkIfDuplicate from "../../common/reject-duplicate";
 import fieldRemoval from "../../lib/remove-field"; 
+import {Document} from "mongoose" 
+import ICustomer from "./customer.interface";
 
 class CustomerController {
     async addCustomer(
@@ -23,7 +25,8 @@ class CustomerController {
                 email , 
                 branch , 
                 address , 
-                phoneNumber
+                phoneNumber , 
+                avatarUrl
             } = req.body 
 
             const isValidBranch = await branchServices.getOne(branch)
@@ -42,12 +45,13 @@ class CustomerController {
             }
 
             let data : IObjectProps = await customerServices.add({
-                firstName , 
+                firstName ,  
                 lastName , 
                 email , 
                 phoneNumber , 
                 branch  , 
                 address , 
+                avatarUrl , 
                 password : phoneNumber
             })
             let clone  = fieldRemoval(data._doc , ["password","__v"]).clone
@@ -69,14 +73,16 @@ class CustomerController {
     ){
         try{
             const {id} = req.params 
-            const data = await customerServices.getOne(id)
+            let data = await customerServices.getOne(id)
             if (!data){
                 return next(new NotFoundError( "Resource not found"))
             }
+            
+            let clone   =  fieldRemoval(data, ["password","__v"]).clone
             res.status(200).json({
                 message : "Customer Retrieval" , 
                 body : {
-                    data 
+                    clone
                 }
             })
         }catch(error : any){

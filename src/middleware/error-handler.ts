@@ -25,15 +25,16 @@ const errorHandler = (
         level: "error",
     });
 
-    const {statusCode , message} = err
+    let {statusCode , message} = err
     let body : IBody = {
       message : message , 
-      statusCode : err.statusCode , 
+      statusCode : err.statusCode  ? err.statusCode : 500, 
       body : {
           data : err.message
       }
     }
-  
+    
+    statusCode = statusCode ? statusCode : 500
     if (err instanceof ApplicationError){
       body.message = "ERROR 500 : INTERNAL SERVER ERROR"
       response(res , statusCode , body)

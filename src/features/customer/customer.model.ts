@@ -17,7 +17,8 @@ const customerSchema = new Schema<ICustomer>({
     complaintSize : {
         type : Number , 
         default : 0
-    }
+    } , 
+    avatarUrl : String
 })
 
 
@@ -52,9 +53,9 @@ async function(next){
     return next()
 })
 // Get a single document and hide the password
-customerSchema.pre("findOne" , {query  :true} , async function(next){
-    this.select({password : 0})
-})
+// customerSchema.pre("findOne" , {query  :true} , async function(next){
+//     this.select({password : 0})
+// })
 
 // Update a single document and hide the password
 customerSchema.pre("findOneAndUpdate" , {query  :true} , async function(next){

@@ -15,12 +15,16 @@ IOptionalCrud<string , ICustomerPatch>{
         return await customerDao.getOne(id)
     }
 
+    async getByEmail(email : string){
+        return await customerDao.getAdminByEmail(email) 
+    }
+
     async getAll(limit: number , page: number  , filter  ?: IObjectProps){
         return await customerDao.getAll(limit , page , filter)
     }
 
     async delete(id: string){
-        return await customerDao.remove(id)
+        return await customerDao.remove(id) 
     }
 
     async update(id :  string, data: ICustomerPatch){
