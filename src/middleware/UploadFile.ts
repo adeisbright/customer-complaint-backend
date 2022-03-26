@@ -1,15 +1,14 @@
-import multer from "multer" 
-import path from "path"
+import multer from "multer";
+import path from "path";
 
 const currentPath = __dirname;
 const directoryName = path.dirname(currentPath);
 
 class UploadFile {
-
     saveToMemory = multer({
         storage: multer.memoryStorage(),
         limits: {
-            fileSize: 200 * 1024 * 1024,
+            fileSize: 200 * 1024 * 1024
         }
     });
 
@@ -18,13 +17,13 @@ class UploadFile {
             cb(null, path.join(directoryName, "../storage/app/temp/"));
         },
         filename: function (req, file, cb) {
-            let date = new Date().getDate();
-            let fileName = `${date}-${file.originalname}`;
+            const date = new Date().getDate();
+            const fileName = `${date}-${file.originalname}`;
             cb(null, fileName);
-        },
+        }
     });
 }
 
-const uploader = new UploadFile()
-export const diskStorage = multer({storage : uploader.saveToDisk})
-export default uploader.saveToMemory
+const uploader = new UploadFile();
+export const diskStorage = multer({ storage: uploader.saveToDisk });
+export default uploader.saveToMemory;

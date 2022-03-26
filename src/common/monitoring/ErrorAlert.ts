@@ -1,11 +1,11 @@
-import events from "events"
+import events from "events";
 
-const { EventEmitter } = events ; 
+const { EventEmitter } = events;
 
 class ErrorAlert extends EventEmitter {
-    message : string ; 
-    errorType : string ; 
-    constructor(msg : string, type : string) {
+    message: string;
+    errorType: string;
+    constructor(msg: string, type: string) {
         super();
         this.message = msg;
         this.errorType = type;

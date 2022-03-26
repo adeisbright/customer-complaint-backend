@@ -1,30 +1,29 @@
-import { Router } from "express" ; 
+import { Router } from "express";
 import complaintController from "./complaint.controller";
 import isAdminRequest from "../../middleware/is-request-from-admin";
-import authenticateRequst from "../../middleware/auth"; 
+import authenticateRequst from "../../middleware/auth";
 import validateComplaint from "../../middleware/validate-complaint";
 
 const {
-  addComplaint , 
-  getComplaint , 
-  getComplaints , 
-  removeComplaint , 
-  updateComplaint
-} = complaintController
+    addComplaint,
+    getComplaint,
+    getComplaints,
+    removeComplaint,
+    updateComplaint
+} = complaintController;
 
-const complaintRouter = Router() 
+const complaintRouter = Router();
 
-complaintRouter.route("/v1/complaints")
+complaintRouter
+    .route("/v1/complaints")
 
-.get(getComplaints)
-.post(validateComplaint , authenticateRequst,isAdminRequest, addComplaint)
+    .get(getComplaints)
+    .post(validateComplaint, authenticateRequst, isAdminRequest, addComplaint);
 
+complaintRouter
+    .route("/v1/complaints/:id")
+    .get(getComplaint)
+    .delete(authenticateRequst, isAdminRequest, removeComplaint)
+    .patch(authenticateRequst, isAdminRequest, updateComplaint);
 
-complaintRouter.route("/v1/complaints/:id")
-.get(getComplaint)
-.delete(authenticateRequst,isAdminRequest , removeComplaint)
-.patch(authenticateRequst,isAdminRequest , updateComplaint)
-
-
-
-export default complaintRouter
+export default complaintRouter;

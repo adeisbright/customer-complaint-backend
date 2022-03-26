@@ -1,8 +1,8 @@
-import morgan from "morgan"
-import { Request , Response } from "express";
+import morgan from "morgan";
+import { Request, Response } from "express";
 import stream from "./stream-logger";
 
-const customFormat = (token : any, req  :Request, res : Response) => {
+const customFormat = (token: any, req: Request, res: Response) => {
     return [
         token["remote-addr"](req, res),
         token.date(req, res),
@@ -10,7 +10,7 @@ const customFormat = (token : any, req  :Request, res : Response) => {
         "HTTP/",
         token["http-version"](req, res),
         token.url(req, res),
-        token.status(req, res), 
+        token.status(req, res),
         "TTM",
         token["response-time"](req, res),
         "ms",
@@ -18,13 +18,13 @@ const customFormat = (token : any, req  :Request, res : Response) => {
         token["total-time"](req, res),
         "ms",
         token.res(req, res, "Content-length"),
-        token["user-agent"](req, res),
+        token["user-agent"](req, res)
     ].join(" ");
 };
 
 const httpLogger = morgan(customFormat, {
     immediate: false,
-    stream: stream,
+    stream: stream
 });
 
 export default httpLogger;

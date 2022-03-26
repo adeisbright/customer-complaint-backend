@@ -1,8 +1,7 @@
-import errorHandler from "./error-handler"
-
+import errorHandler from "./error-handler";
 
 const middleware = {
-    errorHandler : errorHandler
-}
+    errorHandler: errorHandler
+};
 
-export default middleware
+export default middleware;

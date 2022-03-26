@@ -1,74 +1,71 @@
-import {Request , Response , NextFunction} from "express" 
-import Joi from "joi"
-import isValidId from "../lib/is-valid-id" 
-import BadRequestError from "../common/error-handler/BadRequestError"
-import DataValidator from "../lib/DataValidator"
+import { Request, Response, NextFunction } from "express";
+import Joi from "joi";
+import isValidId from "../lib/is-valid-id";
+import BadRequestError from "../common/error-handler/BadRequestError";
+import DataValidator from "../lib/DataValidator";
 
-const {validateEmail , validateMobile} = DataValidator
+const { validateEmail, validateMobile } = DataValidator;
 
 const validateManagerData = async (
-    req : Request , 
-    res : Response , 
-    next : NextFunction
+    req: Request,
+    res: Response,
+    next: NextFunction
 ) => {
     try {
         const {
-            firstName , 
-            lastName , 
-            email , 
-            branch , 
-            phoneNumber , 
-            address , 
-            state , 
+            firstName,
+            lastName,
+            email,
+            branch,
+            phoneNumber,
+            address,
+            state,
             city
-        } = req.body  
+        } = req.body;
 
-        if (branch === undefined || !isValidId(branch)){
+        if (branch === undefined || !isValidId(branch)) {
             return res.status(400).json({
-                message : "Provide a valid branch ID"
-            })
+                message: "Provide a valid branch ID"
+            });
         }
         const Schema = Joi.object({
-            firstName : Joi.string()
-                    .min(2)
-                    .required(),
-            lastName : Joi.string()
-                    .min(2)
-                    .required(),
-            email : Joi.string().email({
-                        minDomainSegments: 2,
-                        tlds: { allow: ["com", "net" , "org" , "info" , "io" , "ng"] }
-                    }).required(),
-            phoneNumber : Joi.string()
-                .required() 
-        })
+            firstName: Joi.string().min(2).required(),
+            lastName: Joi.string().min(2).required(),
+            email: Joi.string()
+                .email({
+                    minDomainSegments: 2,
+                    tlds: { allow: ["com", "net", "org", "info", "io", "ng"] }
+                })
+                .required(),
+            phoneNumber: Joi.string().required()
+        });
         const CustomerSchema = Joi.object({
-            address : Joi.string().required() , 
-            city : Joi.string().required() , 
-            state : Joi.string().required() 
-        })
-        if (!validateEmail(email) || !validateMobile(phoneNumber)){
-            return next(new BadRequestError("Provide a valid email/mobile"))
+            address: Joi.string().required(),
+            city: Joi.string().required(),
+            state: Joi.string().required()
+        });
+        if (!validateEmail(email) || !validateMobile(phoneNumber)) {
+            return next(new BadRequestError("Provide a valid email/mobile"));
         }
-        const {error , _} = await Schema.validateAsync({
-            firstName , 
+        await Schema.validateAsync({
+            firstName,
             lastName,
-            email , 
+            email,
             phoneNumber
-        })
-       
-        if (req.url.endsWith("customers")){ 
+        });
+
+        if (req.url.endsWith("customers")) {
             await CustomerSchema.validateAsync({
                 address,
-                city , 
+                city,
                 state
-            })
+            });
         }
-        
-        next()
-    }catch(error  :any){
-        return next(new BadRequestError(error.message))
-    }
-}
 
-export default validateManagerData
+        next();
+    } catch (error: any) {
+        return next(new BadRequestError(error.message));
+    }
+};
+
+export default validateManagerData;

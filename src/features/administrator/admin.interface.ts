@@ -1,8 +1,8 @@
 interface IAdmin {
-    email : string 
-    password : string 
-    roles? : []
-    userName ?: string
+    email: string;
+    password: string;
+    roles?: [];
+    userName?: string;
 }
 
-export default IAdmin
+export default IAdmin;
