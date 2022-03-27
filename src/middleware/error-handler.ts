@@ -41,9 +41,9 @@ const errorHandler = (
     const resStatusCode = statusCode ? statusCode : 500;
     if (err instanceof ApplicationError) {
         body.message = "ERROR 500 : INTERNAL SERVER ERROR";
-        response(res, resStatusCode, body);
+        response(res,  body);
     } else {
-        response(res, resStatusCode, body);
+        response(res,  body);
     }
 };
 

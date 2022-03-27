@@ -7,6 +7,8 @@ import BadRequestError from "../../common/error-handler/BadRequestError";
 import NotFoundError from "../../common/error-handler/NotFoundError";
 import checkIfDuplicate from "../../common/reject-duplicate";
 import IObjectProps from "../../common/props.interface";
+import constants from "../../constant";
+import response from "../../lib/http-response";
 
 class BranchController {
     async addBranch(req: Request, res: Response, next: NextFunction) {
@@ -37,12 +39,17 @@ class BranchController {
                     address
                 }
             });
-            res.status(201).json({
-                message: "Branch Added Successfully",
-                body: {
-                    data: data
+            response(
+                res ,
+                {
+                    statusCode : constants.statusCode.CREATED , 
+                    message : "Branch created successfully" , 
+                    body : {
+                        data : data
+                    }
                 }
-            });
+                
+            )
         } catch (error: any) {
             return next(new ApplicationError(error.message));
         }
@@ -55,12 +62,17 @@ class BranchController {
             if (!data) {
                 return next(new NotFoundError("Resource not found"));
             }
-            res.status(200).json({
-                message: "Branch Retrieval",
-                body: {
-                    data
+            response(
+                res ,
+                {
+                    statusCode : constants.statusCode.OK, 
+                    message : "Branch retrieved successfully" , 
+                    body : {
+                        data : data
+                    }
                 }
-            });
+                
+            )
         } catch (error: any) {
             return next(new ApplicationError(error.message));
         }
@@ -94,6 +106,7 @@ class BranchController {
             }
             await branchServices.delete(id);
             res.status(200).json({
+                statusCode : 200 , 
                 message: "Branches Removed Successfully",
                 body: {}
             });
@@ -122,13 +135,16 @@ class BranchController {
                     new BadRequestError("A Branch with same details exist")
                 );
             }
-            const data = await branchServices.update(id, req.body);
+            const data = await branchServices.update(id, req.body); 
             res.status(200).json({
                 message: "Branch Updated Successfully",
+                statusCode : 200 , 
                 body: {
                     data
                 }
             });
+
+           
         } catch (error: any) {
             return next(new ApplicationError(error.message));
         }

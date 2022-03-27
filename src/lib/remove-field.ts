@@ -7,7 +7,6 @@ const fieldRemoval = (data: IObjectProps, fields: string[]) => {
         Object.assign(clone, data);
         fields.map((field) => {
             if (clone[field] !== undefined) {
-                console.log(clone[field]);
                 delete clone[field];
             }
         });

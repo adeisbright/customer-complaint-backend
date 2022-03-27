@@ -8,19 +8,15 @@ const validateComplaint = async (
     next: NextFunction
 ) => {
     try {
-        const { title, message, customer, branch } = req.body;
+        const { title, message} = req.body;
 
         const Schema = Joi.object({
             title: Joi.string().min(2).required(),
-            message: Joi.string().min(2).required(),
-            customer: Joi.string().required(),
-            branch: Joi.string().required()
+            message: Joi.string().min(2).required()
         });
         await Schema.validateAsync({
             title,
-            message,
-            customer,
-            branch
+            message
         });
         next();
     } catch (error: any) {

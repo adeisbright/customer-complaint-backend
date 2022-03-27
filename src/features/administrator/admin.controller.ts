@@ -9,7 +9,6 @@ class AdminController {
         try {
             response(
                 res ,
-                constants.statusCode.OK,
                 {
                     statusCode : constants.statusCode.OK , 
                     message : "It was ok" , 

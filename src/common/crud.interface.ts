@@ -1,6 +1,6 @@
 export interface IMandatoryCrud<T, S> {
     add: (resource: T) => Promise<any>;
-    getOne: (field: S) => Promise<any>;
+    getOne: (field: S , hiddenFields ?: any) => Promise<any>;
 }
 
 export interface IOptionalCrud<S, D> {

@@ -7,6 +7,8 @@ import ApplicationError from "../../common/error-handler/ApplicationError";
 import NotFoundError from "../../common/error-handler/NotFoundError";
 import BadRequestError from "../../common/error-handler/BadRequestError";
 import checkIfDuplicate from "../../common/reject-duplicate";
+import fieldRemoval from "../../lib/remove-field";
+
 
 class ManagerController {
     async addManager(req: Request, res: Response, next: NextFunction) {
@@ -38,10 +40,12 @@ class ManagerController {
                 password: phoneNumber
             });
 
+            const clone = fieldRemoval(data._doc, ["password", "__v"]).clone;
             res.status(201).json({
                 message: "Manager Added Successfully",
+                statusCode : 201,
                 body: {
-                    data
+                    clone
                 }
             });
         } catch (error: any) {
@@ -52,12 +56,16 @@ class ManagerController {
     async getManager(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
-            const data = await managerServices.getOne(id);
+
+            const data = await managerServices.getOne(id , {password : 0}) ;
             if (!data) {
                 return next(new NotFoundError("Resource not found"));
             }
+            
+            
             res.status(200).json({
                 message: "Manager Retrieval",
+                statusCode : 200 , 
                 body: {
                     data
                 }
@@ -95,6 +103,7 @@ class ManagerController {
             }
             await managerServices.delete(id);
             res.status(200).json({
+                statusCode : 200 , 
                 message: "Manager Removed Successfully",
                 body: {}
             });
@@ -126,6 +135,7 @@ class ManagerController {
 
             res.status(200).json({
                 message: "Manager Updated Successfully",
+                statusCode : 200,
                 body: {
                     data
                 }

@@ -44,3 +44,5 @@ app.use(middleware.errorHandler);
 app.listen(Config.serverPort, () =>
     console.log(`Started at localhost:${Config.serverPort}`)
 );
+
+export default app  //For testing purpose 

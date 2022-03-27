@@ -8,6 +8,15 @@ import NotFoundError from "../../common/error-handler/NotFoundError";
 import BadRequestError from "../../common/error-handler/BadRequestError";
 import checkIfDuplicate from "../../common/reject-duplicate";
 import fieldRemoval from "../../lib/remove-field";
+import constants from "../../constant";
+
+
+const {
+    statusCode : {
+        OK,
+        CREATED
+    }
+} = constants ;
 
 class CustomerController {
     async addCustomer(req: Request, res: Response, next: NextFunction) {
@@ -18,6 +27,8 @@ class CustomerController {
                 email,
                 branch,
                 address,
+                city,
+                state , 
                 phoneNumber,
                 avatarUrl
             } = req.body;
@@ -37,21 +48,24 @@ class CustomerController {
                 );
             }
 
-            const data: IObjectProps = await customerServices.add({
+            const result: IObjectProps = await customerServices.add({
                 firstName,
                 lastName,
                 email,
                 phoneNumber,
                 branch,
                 address,
+                city , 
+                state,
                 avatarUrl,
                 password: phoneNumber
             });
-            const clone = fieldRemoval(data._doc, ["password", "__v"]).clone;
-            res.status(201).json({
+            const data = fieldRemoval(result._doc, ["password", "__v"]).clone;
+            res.status(CREATED).json({
                 message: "Customer Added Successfully",
+                statusCode : CREATED,
                 body: {
-                    clone
+                    data
                 }
             });
         } catch (error: any) {
@@ -62,16 +76,17 @@ class CustomerController {
     async getCustomer(req: Request, res: Response, next: NextFunction) {
         try {
             const { id } = req.params;
-            const data = await customerServices.getOne(id);
-            if (!data) {
+            const query = await customerServices.getOne(id);
+            if (!query) {
                 return next(new NotFoundError("Resource not found"));
             }
 
-            const clone = fieldRemoval(data, ["password", "__v"]).clone;
-            res.status(200).json({
+            const data = fieldRemoval(query, ["password", "__v"]).clone;
+            res.status(OK).json({
                 message: "Customer Retrieval",
+                statusCode : OK,
                 body: {
-                    clone
+                    data
                 }
             });
         } catch (error: any) {
@@ -87,8 +102,9 @@ class CustomerController {
                 Number(skip),
                 filters
             );
-            res.status(200).json({
+            res.status(OK).json({
                 message: "Customer Retrieval",
+                statusCode : OK , 
                 body: {
                     data
                 }
@@ -106,7 +122,8 @@ class CustomerController {
                 return next(new NotFoundError("Resource not found"));
             }
             await customerServices.delete(id);
-            res.status(200).json({
+            res.status(OK).json({
+                statusCode : OK,
                 message: "Customer Removed Successfully",
                 body: {}
             });
@@ -124,8 +141,9 @@ class CustomerController {
             }
             const data = await customerServices.update(id, req.body);
 
-            res.status(200).json({
+            res.status(constants.statusCode.OK).json({
                 message: "Customer Updated Successfully",
+                statusCode : constants.statusCode.OK,
                 body: {
                     data
                 }

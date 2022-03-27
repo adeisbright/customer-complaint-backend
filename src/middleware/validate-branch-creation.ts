@@ -3,7 +3,7 @@ import Joi from "joi";
 import BadRequestError from "../common/error-handler/BadRequestError";
 import DataValidator from "../lib/DataValidator";
 
-const { validateEmail, validateMobile } = DataValidator;
+const { validateMobile } = DataValidator;
 const validateBranchField = async (
     req: Request,
     res: Response,
@@ -14,10 +14,7 @@ const validateBranchField = async (
         const Schema = Joi.object({
             name: Joi.string().min(2).required(),
             email: Joi.string()
-                .email({
-                    minDomainSegments: 2,
-                    tlds: { allow: ["com", "net", "org", "info", "io", "ng"] }
-                })
+                .email()
                 .required(),
             phoneNumber: Joi.string().required(),
             address: Joi.string().required(),
@@ -25,18 +22,20 @@ const validateBranchField = async (
             state: Joi.string().required()
         });
         await Schema.validateAsync({
-            name: name,
-            email: email,
-            phoneNumber: phoneNumber,
-            address: address,
-            city: city,
-            state: state
+            name,
+            email , 
+            phoneNumber,
+            address,
+            city,
+            state
         });
-        if (!validateEmail(email) || !validateMobile(phoneNumber)) {
-            return next(new BadRequestError("Provide a valid email/mobile"));
+        if (!validateMobile(phoneNumber)) {
+            return next(new BadRequestError("Provide a valid phone number"));
         }
         next();
     } catch (error: any) {
+
+        console.log(error)
         return next(new BadRequestError(error.message));
     }
 };

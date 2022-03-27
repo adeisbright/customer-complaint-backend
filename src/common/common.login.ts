@@ -2,9 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import * as jwt from "jsonwebtoken";
 import Config from "../config";
 import IObjectProps from "./props.interface";
-import BadRequestError from "./error-handler/BadRequestError";
 import ApplicationError from "./error-handler/ApplicationError";
-import NotFoundError from "./error-handler/NotFoundError";
+import NotAuthorizeError from "./error-handler/NotAuthorizeError";
 
 const {
     JWT: { secret, subject, issuer, expires }
@@ -27,13 +26,13 @@ class Login {
             const { email, password } = req.body;
             const user = await this.service.getByEmail(email);
             if (!user) {
-                return next(new NotFoundError("Invalid User Credentials"));
+                res.set("WWW-Authenticate","Basic realm=Access to login token , charset=UTF-8")
+                return next(new NotAuthorizeError("Invalid User Credentials"));
             }
             const hasCorrectPassword = await user.isCorrectPassword(password);
             if (!hasCorrectPassword) {
-                return next(
-                    new BadRequestError("Incorrect Credentials Provided")
-                );
+                res.set("WWW-Authenticate","Basic realm=Access to login token , charset=UTF-8")
+                return next(new NotAuthorizeError("Invalid User Credentials"));
             }
 
             const token = jwt.sign({ id: user._id }, secret, {

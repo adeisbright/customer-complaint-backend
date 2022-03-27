@@ -7,6 +7,16 @@ import ApplicationError from "../common/error-handler/ApplicationError";
 const fileService = new FileMover(DiskStorageHelper);
 
 class MoveFile {
+
+    /**
+     * @description 
+     * Moves a file from one location to another on the disk
+     * @param req 
+     * @param res 
+     * @param next 
+     * @returns 
+     * Attaches the file path to the request body
+     */
     static async diskMove(req: Request, res: Response, next: NextFunction) {
         try {
             if (req.file) {

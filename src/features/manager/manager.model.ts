@@ -39,15 +39,14 @@ managerSchema.methods.isCorrectPassword = async function (
     return await bcrypt.compare(text, this.password);
 };
 
+
+
 managerSchema.pre("find", { query: true }, async function (next) {
     this.select({ password: 0 });
     return next();
 });
 
-// Get a single document and hide the password
-managerSchema.pre("findOne", { query: true }, async function () {
-    this.select({ password: 0 });
-});
+
 
 // Update a single document and hide the password
 managerSchema.pre("findOneAndUpdate", { query: true }, async function () {

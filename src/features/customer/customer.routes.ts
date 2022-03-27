@@ -1,7 +1,7 @@
 import { Router } from "express";
 import customerController from "./customer.controller";
 import isAdminRequest from "../../middleware/is-request-from-admin";
-import authenticateRequst from "../../middleware/auth";
+import authenticateRequest from "../../middleware/auth";
 import validateManagerData from "../../middleware/validate-create-manager-data";
 import multerMemory, { diskStorage } from "../../middleware/UploadFile";
 import MoveFile from "../../middleware/move-file";
@@ -20,14 +20,14 @@ const {
 
 const customerRouter = Router();
 
-customerRouter.post("/auth", login.grantAccess);
+customerRouter.post("/auth/customer", login.grantAccess);
 customerRouter
     .route("/v1/customers")
     .get(getCustomers)
     .post(
-        diskStorage.single("attachment"),
+        diskStorage.single("attachment"), 
         validateManagerData,
-        authenticateRequst,
+        authenticateRequest,
         isAdminRequest,
         MoveFile.diskMove,
         addCustomer
@@ -36,7 +36,7 @@ customerRouter
 customerRouter
     .route("/v1/customers/:id")
     .get(getCustomer)
-    .delete(authenticateRequst, isAdminRequest, removeCustomer)
-    .patch(authenticateRequst, isAdminRequest, updateCustomer);
+    .delete(authenticateRequest, isAdminRequest, removeCustomer)
+    .patch(authenticateRequest, isAdminRequest, updateCustomer);
 
 export default customerRouter;

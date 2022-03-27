@@ -12,8 +12,12 @@ class ManagerService
         return await managerDao.create(resource);
     }
 
-    async getOne(id: string) {
-        return await managerDao.getOne(id);
+    async getOne(id: string , hiddenFields  ?:IObjectProps) {
+        if (hiddenFields){
+            return await managerDao.getOne(id , hiddenFields);
+        }else {
+            return await managerDao.getOne(id)
+        }
     }
 
     async getAll(limit: number, page: number, filter?: IObjectProps) {

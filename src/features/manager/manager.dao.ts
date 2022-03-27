@@ -7,8 +7,8 @@ class ManagerDAO {
         return await ManagerModel.create(data);
     }
 
-    async getOne(id: string) {
-        return await ManagerModel.findById(id);
+    async getOne(id: string , hiddenFields ?: IObjectProps) {
+        return await ManagerModel.findById(id).select(hiddenFields); 
     }
 
     async getAll(limit: number, page: number, filter?: IObjectProps) {

@@ -3,12 +3,14 @@ import * as jwt from "jsonwebtoken";
 import Config from "../config";
 import BadRequestError from "../common/error-handler/BadRequestError";
 import ApplicationError from "../common/error-handler/ApplicationError";
+import NotAuthorizeError from "../common/error-handler/NotAuthorizeError";
+
 
 const {
     JWT: { secret, subject, issuer }
 } = Config;
 
-const authenticateRequst = async (
+const authenticateRequest = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -25,8 +27,9 @@ const authenticateRequst = async (
         }
 
         if (bearer !== "Bearer") {
+            res.set("WWW-Authenticate" , "Basic realm= Access Token , charset=UTF-8")
             return next(
-                new BadRequestError("Bad Request  :Invalid Authorization")
+                new NotAuthorizeError("Bad Request  :Invalid Authorization")
             );
         }
 
@@ -42,4 +45,4 @@ const authenticateRequst = async (
     }
 };
 
-export default authenticateRequst;
+export default authenticateRequest;

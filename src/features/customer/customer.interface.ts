@@ -7,6 +7,8 @@ interface ICustomer {
     phoneNumber: string;
     branch: Schema.Types.ObjectId;
     address: string;
+    city : string ;
+    state : string ; 
     complaintSize?: number;
     avatarUrl?: string;
     password: string;
@@ -22,6 +24,8 @@ export interface ICustomerPatch {
     address?: string;
     complaintSize?: number;
     avatarUrl?: string;
+    city ?: string , 
+    state ?: string
 }
 
 export default ICustomer;

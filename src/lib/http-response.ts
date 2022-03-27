@@ -9,8 +9,8 @@ export interface IBody {
     };
 }
 
-const response = (res: Response, status: number, body: IBody) => {
-    return res.status(status).json(body);
+const response = (res: Response, body: IBody) => {
+    return res.status(body.statusCode).json(body);
 };
 
 export default response;

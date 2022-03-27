@@ -1,5 +1,3 @@
-import { Schema } from "mongoose";
-
 enum StatusEnum {
     P = "Pending",
     A = "Answered",
@@ -8,7 +6,7 @@ enum StatusEnum {
 
 interface IComment {
     message: string;
-    sender: Schema.Types.ObjectId;
+    sender:string;
     userType: string;
 }
 
@@ -16,16 +14,16 @@ interface IComplaint {
     title: string;
     message: string;
     reviewed?: boolean;
-    branch: Schema.Types.ObjectId;
-    customer: Schema.Types.ObjectId;
+    branch?: string;
+    customer?: string ;
     status?: StatusEnum;
-    resolvedBy?: Schema.Types.ObjectId;
+    resolvedBy?: string;
     comments?: IComment[];
 }
 
 export interface IComplaintPatch {
     status: StatusEnum;
-    resolvedBy: Schema.Types.ObjectId;
+    resolvedBy: string;
 }
 
 export default IComplaint;

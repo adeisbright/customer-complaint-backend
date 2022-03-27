@@ -3,32 +3,40 @@ import complaintServices from "./complaint.services";
 import getQueryParser from "../../lib/get-query-parser";
 import branchServices from "../branch/branch.services";
 import IObjectProps from "../../common/props.interface";
+import IComplaint from "./complaint.interface"
 import customerServices from "../customer/customer.services";
 import BadRequestError from "../../common/error-handler/BadRequestError";
 import ApplicationError from "../../common/error-handler/ApplicationError";
 import NotFoundError from "../../common/error-handler/NotFoundError";
+import constants from "../../constant";
+
+const {
+    statusCode : {
+        OK,
+        CREATED
+    }
+} = constants ;
 
 class ComplaintController {
     async addComplaint(req: Request, res: Response, next: NextFunction) {
         try {
-            const { title, message, customer, branch } = req.body;
-            const [isBranch, isCustomer] = await Promise.all([
-                branchServices.getOne(branch),
-                customerServices.getOne(customer)
-            ]);
-
-            if (!isBranch || !isCustomer) {
-                return next(new BadRequestError("Branch/customer not found"));
+            const { title, message} = req.body;
+            const isCustomer = await customerServices.getOne(res.locals.id)
+            
+            if (!isCustomer) {
+                return next(new NotFoundError("customer not found"));
             }
-            const data: IObjectProps = await complaintServices.add({
+           
+            const data = await complaintServices.add({
+                branch : String(isCustomer.branch),
+                customer : String(isCustomer._id),
                 title,
-                message,
-                customer,
-                branch
+                message 
             });
 
-            res.status(201).json({
+            res.status(CREATED).json({
                 message: "Complaint Added Successfully",
+                statusCode  : CREATED , 
                 body: {
                     data: data
                 }
@@ -45,8 +53,9 @@ class ComplaintController {
             if (!data) {
                 return next(new NotFoundError("Resource not found"));
             }
-            res.status(200).json({
-                message: "Complaint  Retrieval",
+            res.status(OK).json({
+                message: "Complaint  Retrieval", 
+                statusCode : OK,
                 body: {
                     data
                 }
@@ -64,8 +73,9 @@ class ComplaintController {
                 Number(skip),
                 filters
             );
-            res.status(200).json({
+            res.status(OK).json({
                 message: "Complaint Retrieval",
+                statusCode : OK , 
                 body: {
                     data
                 }
@@ -83,7 +93,8 @@ class ComplaintController {
                 return next(new NotFoundError("Resource not found"));
             }
             await complaintServices.delete(id);
-            res.status(200).json({
+            res.status(OK).json({
+                statusCode : OK,
                 message: "Complaint Removed Successfully",
                 body: {}
             });
@@ -101,8 +112,9 @@ class ComplaintController {
             }
             const data = await complaintServices.update(id, req.body);
 
-            res.status(200).json({
+            res.status(OK).json({
                 message: "Customer Updated Successfully",
+                statusCode : OK , 
                 body: {
                     data
                 }

@@ -3,6 +3,8 @@ import Config from "./src/config";
 import mongooseOptions from "./src/loaders/mongoose-options";
 import adminServices from "./src/features/administrator/admin.services";
 
+console.log(Config.mongoUrl) ;
+
 (async () => {
     const db = await connect(Config.mongoUrl, mongooseOptions);
     try {

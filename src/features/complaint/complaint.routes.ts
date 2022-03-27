@@ -1,8 +1,12 @@
 import { Router } from "express";
 import complaintController from "./complaint.controller";
 import isAdminRequest from "../../middleware/is-request-from-admin";
-import authenticateRequst from "../../middleware/auth";
+import isCustomerRequest from "../../middleware/is-request-from-customer";
+import isManager from "../../middleware/is-manager";
+import authenticateRequest from "../../middleware/auth";
+import isCustomerOrManager from "../../middleware/is-admin-or-customer";
 import validateComplaint from "../../middleware/validate-complaint";
+import validateDocumentId from "../../middleware/verify-id";
 
 const {
     addComplaint,
@@ -18,12 +22,13 @@ complaintRouter
     .route("/v1/complaints")
 
     .get(getComplaints)
-    .post(validateComplaint, authenticateRequst, isAdminRequest, addComplaint);
+    .post(validateComplaint, authenticateRequest, isCustomerRequest, addComplaint);
 
 complaintRouter
+    .all("/v1/complaints/:id" , validateDocumentId)
     .route("/v1/complaints/:id")
     .get(getComplaint)
-    .delete(authenticateRequst, isAdminRequest, removeComplaint)
-    .patch(authenticateRequst, isAdminRequest, updateComplaint);
+    .delete(authenticateRequest, isCustomerOrManager, removeComplaint)
+    .patch(authenticateRequest, isManager, updateComplaint); 
 
 export default complaintRouter;
