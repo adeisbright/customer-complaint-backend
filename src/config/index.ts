@@ -1,4 +1,4 @@
-process.env.NODE_ENV = "test" ; 
+//process.env.NODE_ENV = "test" ; 
 import * as dotenv from "dotenv";
 dotenv.config();
 

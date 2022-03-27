@@ -2,9 +2,10 @@
     "name": "malon-backend",
     "version": "1.0.0",
     "description": "Backend API for Complaint Management System",
+    "repsitory" : "https://github.com/adeisbright/customer-complaint-backend" , 
     "engines": {
-        "node": "v16.14.0",
-        "npm": "8.3.1"
+        "node": ">=v16.14.0",
+        "npm": ">=8.3.1"
     },
     "main": "index.ts",
     "scripts": {
