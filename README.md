@@ -290,6 +290,11 @@ To run in production, use :
 
 `npm run start`
 
+To see the logs while running the project, you should use :
+
+`npm run debug`
+to start the app
+
 ### Understanding Each Endpoint
 
 Kindly check openapi.json , which is the swagger file that documents all endpoints

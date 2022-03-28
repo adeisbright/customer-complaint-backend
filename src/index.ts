@@ -12,6 +12,8 @@ import customerRouter from "./features/customer/customer.routes";
 import complaintRouter from "./features/complaint/complaint.routes";
 import middleware from "./middleware";
 import httpLogger from "./common/logging/http-logger";
+import * as swaggerUI from "swagger-ui-express"
+import openAPI from "../openapi.json"
 
 const app: express.Application = express();
 
@@ -24,13 +26,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../storage")));
 
 app.get("/", (req: Request, res: Response) => {
-    res.status(200).json({
-        message: "Ok",
-        body: {
-            data: []
-        }
-    });
+    res.redirect("/v1/docs")
 });
+app.use("/v1/docs", swaggerUI.serve, swaggerUI.setup(openAPI));
 
 startMongoDB();
 

@@ -5,3 +5,4 @@ seed
 .DS_STORE
 .nyc_output
 coverage
+dist
