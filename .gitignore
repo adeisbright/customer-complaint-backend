@@ -3,3 +3,5 @@ node_modules
 logs
 seed
 .DS_STORE
+.nyc_output
+coverage

@@ -221,6 +221,9 @@ on the code once there is a change in code
 **_ typescript _**
 Installs the typescript installer
 
+**_ source-map-support _**
+It provides source mapp support for stack traces.
+
 ### Environment Settings
 
 Provide appropriate values where needed as specified in env.sample file

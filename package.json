@@ -2,7 +2,7 @@
     "name": "malon-backend",
     "version": "1.0.0",
     "description": "Backend API for Complaint Management System",
-    "repsitory" : "https://github.com/adeisbright/customer-complaint-backend" , 
+    "repsitory": "https://github.com/adeisbright/customer-complaint-backend",
     "engines": {
         "node": ">=v16.14.0",
         "npm": ">=8.3.1"
@@ -15,7 +15,22 @@
         "seed": "tsc seed.ts --outdir ./seed && node --unhandled-rejections=strict ./seed/seed.js",
         "debug": "export DEBUG=* && npm run start",
         "format": "npx prettier --write .",
-        "lint": "npx eslint . --fix"
+        "lint": "npx eslint . --fix",
+        "coverage": "nyc npm run test"
+    },
+    "nyc": {
+        "extension": [
+            ".ts",
+            ".tsx"
+        ],
+        "exclude": [
+            "/*.d.ts",
+            "seed/"
+        ],
+        "reporter": [
+            "html"
+        ],
+        "all" : true
     },
     "keywords": [
         "Customer",
@@ -63,6 +78,7 @@
         "eslint": "^8.12.0",
         "eslint-config-prettier": "^8.5.0",
         "mocha": "^9.2.2",
+        "nyc": "^15.1.0",
         "prettier": "^2.6.1",
         "sinon": "^13.0.1",
         "source-map-support": "^0.5.21",
