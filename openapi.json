@@ -40,11 +40,21 @@
         ] , 
     "components" : {
         "schemas" : {
-            "indexName":{
+            "filters":{
                 "type":"string",
-                "description":"A descriptive name for an index on elasticsearch",
-                "example": "catalog"
+                "description" : "The attributes to return from each document" ,
+                "example":"title,name,description"
             },
+            "page":{
+                "type":"number",
+                "description" : "The specific page of the request to view" ,
+                "example": 3
+            },
+            "limit" : {
+                "type":"number",
+                "description" : "The number of question to skip" , 
+                "example" : 5 
+            } , 
             "firstName" : {
                 "type":"string",
                 "description":"Firstname of an entity",
@@ -60,6 +70,11 @@
                 "description":"email address",
                 "example": "foo@bar.com"
             },
+            "password" : {
+                "type":"string",
+                "description":"password to login",
+                "example": "password"
+            },
             "branch" : {
                 "type":"string",
                 "description":"logical grouping of organization's geography",
@@ -69,6 +84,21 @@
                 "type":"string",
                 "description":"Telephone number",
                 "example": "+2348140850132"
+            },
+            "city" : {
+                "type":"string",
+                "description":"A place's city",
+                "example": "Lagos"
+            },
+            "state" : {
+                "type":"string",
+                "description":"A state within a country",
+                "example": "Lagos"
+            },
+            "address" : {
+                "type":"string",
+                "description":"Full address of a place",
+                "example": "KM 20 Lekki-Epe Ajah Express Road"
             },
             "body" : {
                 "type" : "object"  , 
@@ -119,6 +149,15 @@
                             }, 
                             "statusCode" : {
                                 "$ref" : "#/components/schemas/statusCode"
+                            } , 
+                            "body" : {
+                                "type" : "object" , 
+                                "description" : "Body of the data response" , 
+                                "properties" : {
+                                    "data" : {
+                                        "type" : "Array || string || number || object"
+                                    }
+                                }
                             }
                         }
                     }
@@ -135,6 +174,9 @@
                             }, 
                             "statusCode" : {
                                 "$ref" : "#/components/schemas/statusCode"
+                            } , 
+                            "body" : {
+                                "$ref" : "#/components/schemas/body"
                             }
                         }
                     }
@@ -142,6 +184,22 @@
             } , 
             "400" : {
                 "description" : "A bad request from the user"  , 
+                "content" : {
+                    "application/json" : {
+                        "type" : "object" , 
+                        "properties" : {
+                            "message" : {
+                                "$ref" : "#/components/schemas/message"
+                            }, 
+                            "statusCode" : {
+                                "$ref" : "#/components/schemas/statusCode"
+                            }
+                        }
+                    }
+                }
+            } , 
+            "401" : {
+                "description" : "An unauthorized request. This happens when user provides wrong credentials"  , 
                 "content" : {
                     "application/json" : {
                         "type" : "object" , 
@@ -172,10 +230,269 @@
                     }
                 }
             }
+        } , 
+        "securitySchemes" : {
+            "bearerAuth" : {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT" , 
+                "in" : "header" 
+            }
         }
     } , 
-    "tags" : [{"name" : "API Operations"}] , 
     "paths" : {
+            "/auth/admin" : {
+                "post" : {
+                    "tags"  : ["Admin Login"] , 
+                    "description" : "Logs the admin and generates token" , 
+                    "requestBody" : {
+                        "description" : "The login credentials for admin" , 
+                        "required" : true , 
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "type" : "object",
+                                    "properties" : {
+                                        "email" : {
+                                            "$ref" : "#/components/schemas/email"
+                                        } , 
+                                        "password" : {
+                                            "$ref" : "#/components/schemas/password"
+                                        }
+                                    } , 
+                                    "required" : ["email" , "password"]
+                                }
+                            }
+                        }
+                    } , 
+                    "responses" : {
+                        "201" : {
+                            "$ref" : "#/components/responses/201"
+                        } , 
+                        "400" : {
+                            "$ref" : "#/components/responses/400"
+                        } , 
+                        "401" : {
+                            "$ref" : "#/components/responses/401"
+                        } , 
+                        "500" : {
+                            "$ref" : "#/components/responses/500"
+                        }
+                    }
+                }
+            } , 
+            "/v1/branches" : {
+                "get" : {
+                    "tags"  : ["Get Branches"] , 
+                    "description" : "Gets all the avalable branches" , 
+                    "parameters" : [
+                        {
+                            "name" : "filters" , 
+                            "in" : "query" , 
+                            "required" : true , 
+                            "schema" : {
+                                "$ref" : "#/components/schemas/filters"
+                            }
+                        } , 
+                        {
+                            "name" : "limit" , 
+                            "in" : "query" , 
+                            "required" : false , 
+                            "schema" : {
+                                "$ref" : "#/components/schemas/limit"
+                            }
+                        } , 
+                        {
+                            "name" : "page" , 
+                            "in" : "query" , 
+                            "required" : false , 
+                            "schema" : {
+                                "$ref" : "#/components/schemas/page"
+                            }
+                        }
+                    ] , 
+                    "responses" : {
+                        "200" : {
+                            "$ref" : "#/components/responses/200"
+                        } , 
+                        "500" : {
+                            "$ref" : "#/components/responses/500"
+                        }
+                    }
+                } , 
+                "post" : {
+                    "description" : "Adds a new branch" , 
+                    "tags"  : ["Add New Branch"] , 
+                    "requestBody" : {
+                        "description" : "Data needed when creating a branch",
+                        "required"  :true , 
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "type" : "object" , 
+                                    "properties" : {
+                                        "name" : {
+                                            "$ref" : "#/components/schemas/name"
+                                        } , 
+                                        "email" : {
+                                            "$ref" : "#/components/schemas/email"
+                                        } , 
+                                        "phoneNumber" : {
+                                            "$ref" : "#/components/schemas/phoneNumber"
+                                        } , 
+                                        "city" : {
+                                            "$ref" : "#/components/schemas/city"
+                                        } , 
+                                        "state" : {
+                                            "$ref" : "#/components/schemas/state"
+                                        } , 
+                                        "address" : {
+                                            "$ref" : "#/components/schemas/address"
+                                        }
+                                    } , 
+                                    "required" : [
+                                        "name" , 
+                                        "email" , 
+                                        "phoneNumber" , 
+                                        "city" , 
+                                        "state" , 
+                                        "address"
+                                    ]
+                                }
+                            }
+                        }
+                    } , 
+                    "responses" : {
+                        "201" : {
+                            "$ref" : "#/components/responses/201"
+                        } , 
+                        "400" : {
+                            "$ref" : "#/components/responses/400"
+                        } , 
+                        "401" : {
+                            "$ref" : "#/components/responses/401"
+                        } , 
+                        "500" : {
+                            "$ref" : "#/components/responses/500"
+                        }
+                    } , 
+                    "security": [
+                        {
+                           "bearerAuth": []
+                        }
+                     ]
+                }
+            } , 
+            "/v1/branches/{id}" : {
+                "get" : {
+                    "description" : "Retrieve a single branch" , 
+                    "tags" : ["Get a Single Branch"] , 
+                    "parameters" : [
+                        {
+                            "name" : "id" , 
+                            "in"  :"path" , 
+                            "required" : true ,
+                            "description" : "The unique identifier of the branch",
+                            "example" : "623d318595e0ff1175c1f181"
+                        }
+                    ] , 
+                    "responses" : {
+                        "200" : {
+                            "$ref"  : "#/components/responses/200"
+                        } , 
+                        "400" : {
+                            "$ref"  : "#/components/responses/400"
+                        }  , 
+                        "401" : {
+                            "$ref" : "#/components/responses/401"
+                        } , 
+                        "500" : {
+                            "$ref" : "#/components/responses/500"
+                        }
+                    }
+                } , 
+                "patch" : {
+                    "description"  : "Update a particular field(s) in" , 
+                    "tags" : ["Update a Branch"] , 
+                    "parameters": [
+                        {
+                            "name" : "id" , 
+                            "in"  :"path" , 
+                            "required" : true ,
+                            "description" : "The unique identifier of the branch",
+                            "example" : "623d318595e0ff1175c1f181"
+                        }
+                    ] , 
+                    "requestBody" : {
+                        "description" : "The field to update or add to the branch" , 
+                        "required" : true , 
+                        "content" : {
+                            "application/json" : {
+                                "schema" : {
+                                    "type" : "object" , 
+                                    "properties" : {
+                                        "name" : {
+                                            "$ref" : "#/components/schemas/name"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } , 
+                    "responses" : {
+                        "200" : {
+                            "$ref"  : "#/components/responses/200"
+                        } , 
+                        "400" : {
+                            "$ref"  : "#/components/responses/400"
+                        }  , 
+                        "401" : {
+                            "$ref" : "#/components/responses/401"
+                        } , 
+                        "500" : {
+                            "$ref" : "#/components/responses/500"
+                        }
+                    },
+                    "security" : [
+                        {
+                            "bearerAuth" : []
+                        }
+                    ]
+                } , 
+                "delete" : {
+                    "description" : "Removes a branch" , 
+                    "tags" : ["Removes a branch"] , 
+                    "parameters" : [
+                        {
+                            "name" : "id" , 
+                            "in"  : "path" , 
+                            "required" : true , 
+                            "example" :"623d318595e0ff1175c1f181"
+                        }
+                    ] , 
+                    "responses" : {
+                        "responses" : {
+                            "200" : {
+                                "$ref"  : "#/components/responses/200"
+                            } , 
+                            "400" : {
+                                "$ref"  : "#/components/responses/400"
+                            }  , 
+                            "401" : {
+                                "$ref" : "#/components/responses/401"
+                            } , 
+                            "500" : {
+                                "$ref" : "#/components/responses/500"
+                            }
+                        }
+                    } , 
+                    "security" : [
+                        {
+                            "bearerAuth" : []
+                        }
+                    ]
+                }
+            } , 
             "/v1/managers" : {
                 "get" : {
                     "parameters" : [

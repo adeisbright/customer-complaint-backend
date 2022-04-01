@@ -1,4 +1,4 @@
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import path from "path";
 import helmet from "helmet";
 import cors from "cors";
@@ -15,7 +15,11 @@ import httpLogger from "./common/logging/http-logger";
 import * as swaggerUI from "swagger-ui-express"
 import openAPI from "../openapi.json"
 
+
+
 const app: express.Application = express();
+
+
 
 app.use(compression());
 app.use(express.json());
@@ -25,9 +29,16 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "../storage")));
 
-app.get("/", (req: Request, res: Response) => {
+
+
+
+
+
+
+app.get("/", async (req: Request, res: Response , next : NextFunction) => {
     res.redirect("/v1/docs")
 });
+
 app.use("/v1/docs", swaggerUI.serve, swaggerUI.setup(openAPI));
 
 startMongoDB();

@@ -19,7 +19,7 @@ chai.use(chaiHttp)
 const expect = chai.expect 
 const {adminEmail , adminPassword} = Config
 
-describe("Manager Controllers" , () => {
+describe.skip("Manager Controllers" , () => {
     let branchID = ""
     let adminToken = "" 
 

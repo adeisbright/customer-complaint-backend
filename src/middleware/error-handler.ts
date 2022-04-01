@@ -6,6 +6,9 @@ import NotAuthorizeError from "../common/error-handler/NotAuthorizeError";
 import response, { IBody } from "../lib/http-response";
 import ErrorAlert from "../common/monitoring/ErrorAlert";
 import fileLogger from "../common/logging/file-logger";
+import messageSlack from "../lib/messageSlact"
+import messageTelegram from "../lib/messageTelegram"
+import Config from "../config";
 
 type ErrorType =
     | ApplicationError
@@ -21,8 +24,11 @@ const errorHandler = (
 ) => {
     const errorAlert = new ErrorAlert(err.message, err.name);
     errorAlert.notify();
-
+    
     const errorMessage = `${req.ip} : ${req.method} ${req.url} ${err.statusCode} :${err.name} ${err.message} `;
+
+    messageTelegram(errorMessage)
+    messageSlack(errorMessage , Config.slackChannel)
 
     fileLogger.log({
         message: errorMessage,

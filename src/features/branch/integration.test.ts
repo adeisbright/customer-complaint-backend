@@ -16,7 +16,7 @@ chai.use(chaiHttp)
 const expect = chai.expect 
 const {adminEmail , adminPassword} = Config
 
-describe("Branch Controllers" , () => {
+describe.skip("Branch Controllers" , () => {
     
     //Remove every branch instance in the branch collection before the test 
     before(async () => {
