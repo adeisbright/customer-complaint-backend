@@ -88,6 +88,7 @@ class BranchController {
             );
             res.status(200).json({
                 message: "Branches Retrieval",
+                statusCode : 200 , 
                 body: {
                     data
                 }

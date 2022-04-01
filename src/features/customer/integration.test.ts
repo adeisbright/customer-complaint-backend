@@ -24,7 +24,7 @@ const {adminEmail , adminPassword} = Config
 const file = path.join(__dirname , "../../../storage/img.JPEG")
 
 
-describe("Manager Controllers" , () => {
+describe.skip("Manager Controllers" , () => {
     let branchID = ""
     let adminToken = "" 
     let customerID = ""

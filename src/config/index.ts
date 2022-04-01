@@ -1,4 +1,4 @@
-//process.env.NODE_ENV = "test" ; 
+process.env.NODE_ENV = "test" ; 
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -23,6 +23,12 @@ interface IConfig {
     saltFactor: number;
     JWT: IJWT;
     maxBranches: number;
+    slackKey : string ; 
+    slackBotToken : string ; 
+    slackClientID: string ;
+    slackChannel :string ; 
+    telegramBotToken  :string ; 
+    telegramGroupID : string ; 
 }
 
 
@@ -45,7 +51,13 @@ const Config: IConfig = {
         algorithm: process.env.JWT_ALGORITHM as string,
         expires: Number(process.env.JWT_EXPIRES)
     },
-    maxBranches: Number(process.env.MAX_BRANCHES)
+    maxBranches: Number(process.env.MAX_BRANCHES) , 
+    slackBotToken : process.env.SLACK_BOT_TOKEN as string , 
+    slackClientID :  process.env.SLACK_CLIENT_ID as string  , 
+    slackKey :  process.env.SLACK_SIGNING_KEY as string ,
+    slackChannel: process.env.SLACK_CHANNEL  as string ,
+    telegramBotToken : process.env.TELEGRAM_BOT_TOKEN as string , 
+    telegramGroupID : process.env.TELEGRAM_GROUP_ID as string
 };
 
 export default Config;

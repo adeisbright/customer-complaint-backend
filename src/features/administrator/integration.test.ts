@@ -10,7 +10,7 @@ const expect = chai.expect
 
 const {adminEmail , adminPassword} = Config
 
-describe("Admin Controller Test" , async function(){
+describe.skip("Admin Controller Test" , async function(){
     before(() => {
         console.log("Kicking off Test")
     })

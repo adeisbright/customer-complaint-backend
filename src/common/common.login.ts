@@ -4,6 +4,8 @@ import Config from "../config";
 import IObjectProps from "./props.interface";
 import ApplicationError from "./error-handler/ApplicationError";
 import NotAuthorizeError from "./error-handler/NotAuthorizeError";
+import messageSlack from "../lib/messageSlact";
+import messageTelegram from "../lib/messageTelegram";
 
 const {
     JWT: { secret, subject, issuer, expires }
@@ -41,6 +43,11 @@ class Login {
                 algorithm: "HS512",
                 subject: subject
             });
+            
+            const currentTime = new Date()
+            const loginMessage = `${email} just logged in at ${currentTime}`
+            messageTelegram(loginMessage)
+            messageSlack(loginMessage , Config.slackChannel)
 
             res.status(200).json({
                 statusCode: 200,
